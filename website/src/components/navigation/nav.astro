@@ -1,0 +1,76 @@
+---
+import { getPayload } from "payload";
+import { config } from "../../../../payload-app/src/index";
+
+const payload = await getPayload({ config });
+
+const navLinks = await payload.findGlobal({
+  slug: "navigation",
+  depth: 1
+});
+console.log(navLinks.links)
+
+import MenuIcon from "../../icons/menu.astro";
+---
+
+<header>
+  <nav>
+    {navLinks &&
+      navLinks?.links?.page &&
+      navLinks?.links.url &&
+      <button
+      data-menu="toggle"
+      aria-expanded="false"
+      aria-label="Open menu"
+      class="cursor-pointer transition-all duration-300 ease-in-out"
+    >
+      <MenuIcon />
+    </button>
+    <menu
+      data-menu="container"
+      aria-hidden="true"
+      class="hidden gap-4 border bg-blue-400 transition-all duration-300 ease-in-out"
+    >
+      {
+        navLinks?.links.map((item: { page: string; url: string }) => {
+          console.log(item);
+          return (
+            <li class="border group flex">
+              <a
+                href={item.url}
+                class="p-4 group-hover:bg-red-500 group-focus-within:bg-red-500 transition-all"
+              >
+                {item.page}
+              </a>
+            </li>
+          );
+        })
+      }
+    </menu>}
+  </nav>
+</header>
+
+<script>
+  const menuBtn = document.querySelector("[data-menu='toggle']");
+  const menuContainer = document.querySelector("[data-menu='container']");
+
+  menuBtn?.addEventListener("click", () => {
+    const isExpanded = menuBtn?.getAttribute("aria-expanded") === "true";
+    menuBtn?.setAttribute("aria-expanded", isExpanded ? "false" : "true");
+
+    const isOpen = menuBtn?.getAttribute("aria-label") === "Open menu";
+    menuBtn?.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+
+    const isShowing = menuContainer?.getAttribute("aria-hidden") === "false";
+    menuContainer?.setAttribute("aria-hidden", !isShowing ? "false" : "true");
+
+    if (!isExpanded) {
+      console.log("Menu is now showing");
+      menuContainer?.classList.remove("hidden");
+      menuContainer?.classList.add("flex", "translate-y-2");
+    } else {
+      menuContainer?.classList.remove("flex");
+      menuContainer?.classList.add("hidden");
+    }
+  });
+</script>

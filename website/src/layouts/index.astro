@@ -1,0 +1,29 @@
+---
+import Nav from "../components/navigation/nav.astro";
+
+// import { getPayload } from "payload";
+// import config from "payload-app/src/payload.config";
+
+// const payload = await getPayload({ config });
+
+// const navigation = await payload.findGlobal({
+//   slug: "navigation",
+// });
+// console.log(navigation);
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <Nav />
+
+    <slot />
+
+    <footer class="mt-40">
+      <p>Footer</p>
+    </footer>
+  </body>
+</html>

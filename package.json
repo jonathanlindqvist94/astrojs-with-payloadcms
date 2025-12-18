@@ -1,0 +1,12 @@
+{
+  "name": "astro-portfolio",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev:payload": "cd payload-app && npm run dev",
+    "dev:website": "cd website && npm run dev"
+  },
+  "dependencies": {
+    "astro": "^5.16.5"
+  }
+}
