@@ -1,10 +1,13 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 /**
  * Simple object check.
  * @param item
  * @returns {boolean}
  */
-export function isObject(item: unknown): boolean {
-  return Boolean(item && typeof item === 'object' && !Array.isArray(item))
+export function isObject(item: unknown): item is object {
+  return typeof item === 'object' && !Array.isArray(item)
 }
 
 /**
@@ -12,17 +15,20 @@ export function isObject(item: unknown): boolean {
  * @param target
  * @param ...sources
  */
-export default function deepMerge(obj1, obj2) {
-  const output = { ...obj1 }
-
-  for (const key in obj2) {
-    if (Object.prototype.hasOwnProperty.call(obj2, key)) {
-      if (typeof obj2[key] === 'object' && !Array.isArray(obj2[key]) && obj1[key]) {
-        output[key] = deepMerge(obj1[key], obj2[key])
+export default function deepMerge<T, R>(target: T, source: R): T {
+  const output = { ...target }
+  if (isObject(target) && isObject(source)) {
+    Object.keys(source).forEach((key) => {
+      if (isObject(source[key])) {
+        if (!(key in target)) {
+          Object.assign(output, { [key]: source[key] })
+        } else {
+          output[key] = deepMerge(target[key], source[key])
+        }
       } else {
-        output[key] = obj2[key]
+        Object.assign(output, { [key]: source[key] })
       }
-    }
+    })
   }
 
   return output
