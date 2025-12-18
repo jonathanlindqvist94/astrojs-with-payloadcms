@@ -528,10 +528,24 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Navigation {
   id: string;
   logo?: (string | null) | Media;
-  links?:
+  navItems?:
     | {
-        page?: (string | null) | Post;
-        url?: string | null;
+        displayAs?: ('hamburger' | 'normal') | null;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: string | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
         id?: string | null;
       }[]
     | null;
@@ -572,11 +586,19 @@ export interface Footer {
  */
 export interface NavigationSelect<T extends boolean = true> {
   logo?: T;
-  links?:
+  navItems?:
     | T
     | {
-        page?: T;
-        url?: T;
+        displayAs?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
         id?: T;
       };
   updatedAt?: T;
