@@ -1,0 +1,42 @@
+---
+// components/BlockRenderer.astro
+import type { Block } from "../../../../payload-app/src/index";
+
+// Import all your block components
+// import HeroBlock from "./blocks/HeroBlock.astro";
+// import TextBlock from "./blocks/TextBlock.astro";
+// import ImageBlock from "./blocks/ImageBlock.astro";
+// import CallToActionBlock from "./blocks/CTABlock.astro";
+// ... add more as needed
+
+import AccordionBlock from "../accordion/accordion.astro";
+
+interface Props {
+  block: Block;
+}
+
+const { block } = Astro.props;
+
+// Map block types to components
+const blockComponents = {
+  // hero: HeroBlock,
+  // text: TextBlock,
+  // image: ImageBlock,
+  // cta: CallToActionBlock,
+  accordion: AccordionBlock,
+  // ... add more mappings
+};
+
+const BlockComponent = blockComponents[block.blockType];
+// console.log(block);
+---
+
+{
+  BlockComponent ? (
+    <BlockComponent {...block} />
+  ) : (
+    <div class="block-error">
+      <p>Unknown block type: {block.blockType}</p>
+    </div>
+  )
+}
