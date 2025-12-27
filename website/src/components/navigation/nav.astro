@@ -2,6 +2,8 @@
 import { getPayload } from "payload";
 import { config } from "../../../../payload-app/src/index";
 import MenuIcon from "../../icons/menu.astro";
+import { HamburgerMenu } from "./hamburger/hamburgerMenu";
+import DefaultMenu from "./defaultMenu/defaultMenu.astro";
 
 const payload = await getPayload({ config });
 
@@ -10,73 +12,29 @@ const navLinks = await payload.findGlobal({
   depth: 2,
 });
 
-const items = navLinks.navItems.map((item) => ({
+const items = navLinks?.navItems?.map((item) => ({
+  type: item.link.type,
   label: item.link.label,
-  slug: item.link.reference.value.slug,
-  styleAs: item.displayAs || "normal",
+  slug:
+    item.link.type === "reference"
+      ? item.link.reference?.value.slug
+      : item.link.url,
+  openInNewTab: item.link.newTab || false,
 }));
+const displayAs = navLinks.displayAs || "normal";
 ---
 
-<header>
-  <nav>
+<header class="flex px-4 h-20 relative mb-20">
+  <div
+    class="flex px-inline-padding justify-between max-w-layout-max-width items-center w-full mx-auto"
+  >
+    <img src="https://picsum.dev/100/50" alt="" />
     {
-      items.map(
-        (item) =>
-          item.label &&
-          item.slug && (
-            <button
-              data-menu="toggle"
-              aria-expanded="false"
-              aria-label="Open menu"
-              class="cursor-pointer transition-all duration-300 ease-in-out"
-            >
-              <MenuIcon />
-            </button>
-          ),
+      displayAs === "hamburger" ? (
+        <HamburgerMenu client:load items={items} />
+      ) : (
+        <DefaultMenu items={items} />
       )
     }
-    <menu
-      data-menu="container"
-      aria-hidden="true"
-      class="hidden gap-4 border bg-blue-400 transition-all duration-300 ease-in-out"
-    >
-      {
-        items.map((item) => (
-          <li class="border group flex">
-            <a
-              href={item.slug}
-              class="p-4 group-hover:bg-red-500 group-focus-within:bg-red-500 transition-all"
-            >
-              {item.label}
-            </a>
-          </li>
-        ))
-      }
-    </menu>
-  </nav>
+  </div>
 </header>
-
-<script>
-  const menuBtn = document.querySelector("[data-menu='toggle']");
-  const menuContainer = document.querySelector("[data-menu='container']");
-
-  menuBtn?.addEventListener("click", () => {
-    const isExpanded = menuBtn?.getAttribute("aria-expanded") === "true";
-    menuBtn?.setAttribute("aria-expanded", isExpanded ? "false" : "true");
-
-    const isOpen = menuBtn?.getAttribute("aria-label") === "Open menu";
-    menuBtn?.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
-
-    const isShowing = menuContainer?.getAttribute("aria-hidden") === "false";
-    menuContainer?.setAttribute("aria-hidden", !isShowing ? "false" : "true");
-
-    if (!isExpanded) {
-      console.log("Menu is now showing");
-      menuContainer?.classList.remove("hidden");
-      menuContainer?.classList.add("flex", "translate-y-2");
-    } else {
-      menuContainer?.classList.remove("flex");
-      menuContainer?.classList.add("hidden");
-    }
-  });
-</script>
