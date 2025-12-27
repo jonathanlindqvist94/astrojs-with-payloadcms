@@ -17,6 +17,15 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      watch: {
+        usePolling: true,
+        ignored: ["**/node_modules/**", "**/.git/**"],
+      },
+      hmr: {
+        overlay: true,
+      },
+    },
   },
 
   integrations: [react()],

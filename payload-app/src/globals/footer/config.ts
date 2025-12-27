@@ -1,3 +1,4 @@
+import { link } from '../../fields/link'
 import { GlobalConfig } from 'payload'
 
 export const Footer: GlobalConfig = {
@@ -33,8 +34,17 @@ export const Footer: GlobalConfig = {
           type: 'text',
         },
         {
-          name: 'content',
-          type: 'textarea',
+          name: 'navItemsMiddleCol',
+          type: 'array',
+          fields: [
+            link({
+              appearances: false,
+            }),
+          ],
+          maxRows: 6,
+          admin: {
+            initCollapsed: true,
+          },
         },
       ],
     },
@@ -45,23 +55,21 @@ export const Footer: GlobalConfig = {
       fields: [
         {
           name: 'title',
-          label: 'Social Links',
+          label: 'Social Links Title',
           type: 'text',
         },
         {
-          name: 'linksArray',
+          name: 'navItemsRightCol',
           type: 'array',
-          maxRows: 4,
           fields: [
-            {
-              name: 'label',
-              type: 'text',
-            },
-            {
-              name: 'url',
-              type: 'text',
-            },
+            link({
+              appearances: false,
+            }),
           ],
+          maxRows: 6,
+          admin: {
+            initCollapsed: true,
+          },
         },
       ],
     },
