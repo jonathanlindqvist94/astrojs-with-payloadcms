@@ -5,6 +5,9 @@ import "../styles/global.css";
 // Layout imports
 import Layout from "../layouts/index.astro";
 
+// Component imports
+import BlockRenderer from "../components/blockRenderer/blockRenderer.astro";
+
 // Payload imports
 import { getPayload } from "payload";
 import { config } from "../../../payload-app/src/index";
@@ -17,4 +20,14 @@ const posts = await payload.find({
 
 <Layout>
   <h1>{posts.docs.map((post) => post.title)} hello</h1>
+  {
+    posts.docs.map((post) => (
+      <article>
+        <h2>{post.title}</h2>
+        {post.group.contentBlocks.blocks.map((block) => (
+          <BlockRenderer block={block} />
+        ))}
+      </article>
+    ))
+  }
 </Layout>
