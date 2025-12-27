@@ -79,6 +79,9 @@
 * {
   box-sizing: border-box;
 }
+html {
+  scrollbar-gutter: stable;
+}
 
 h1,
 h2,
@@ -90,12 +93,13 @@ p {
   @apply text-primary-black;
 }
 .layout-max-width {
-  @apply max-w-layout-max-width mx-auto px-inline-padding;
+  @apply max-w-layout-max-width mx-auto px-inline-padding w-full;
 }
 .grid-layout-accordion {
-  @apply grid;
+  @apply sm:grid flex flex-col;
   grid-template-columns: repeat(6, 1fr);
 }
 .accordion-sub-grid {
+  display: grid;
   grid-template-rows: max-content;
 }
