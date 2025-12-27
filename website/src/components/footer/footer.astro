@@ -1,0 +1,88 @@
+---
+import { getPayload } from "payload";
+import { config } from "../../../../payload-app/src/index";
+
+const payload = await getPayload({ config });
+const footerData = await payload.findGlobal({ slug: "footer" });
+---
+
+<footer class="bg-green-400">
+  <div
+    class="max-w-layout-max-width px-inline-padding mx-auto py-12 grid mdgrid-cols-3 grid-cols-1 gap-20"
+  >
+    <section aria-labelledby="left-column-title">
+      <h2 class="text-2xl font-semibold mb-3" id="left-column-title">
+        {footerData.leftColumn?.title}
+      </h2>
+      <p>
+        {footerData.leftColumn?.content}
+      </p>
+    </section>
+    <section aria-labelledby="center-column-title">
+      <h2 class="text-2xl font-semibold mb-3" id="center-column-title">
+        {footerData.middleColumn?.title}
+      </h2>
+      <nav>
+        <ul>
+          {
+            footerData.middleColumn?.navItemsMiddleCol?.map((item) => {
+              const link =
+                item.link.type === "reference"
+                  ? item.link.reference?.value.slug
+                  : item.link.url;
+              const openInNewTab = item.link.newTab || false;
+              const title = item.link.label;
+              const type = item.link.type;
+              return (
+                <li>
+                  <a
+                    class="focus:underline hover:underline hover:text-blue-700"
+                    {...(openInNewTab
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    href={link}
+                  >
+                    {title}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+    </section>
+    <section aria-labelledby="right-column-title">
+      <h2 class="text-2xl font-semibold mb-3" id="right-column-title">
+        {footerData.rightColumn?.title}
+      </h2>
+      <nav>
+        <ul>
+          {
+            footerData.rightColumn?.navItemsRightCol?.map((item) => {
+              const link =
+                item.link.type === "reference"
+                  ? item.link.reference?.value.slug
+                  : item.link.url;
+              const openInNewTab = item.link.newTab || false;
+              const title = item.link.label;
+              const type = item.link.type;
+              return (
+                <li>
+                  <a
+                    class="focus:underline hover:underline hover:text-blue-700"
+                    {...(openInNewTab
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    href={link}
+                  >
+                    {title}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </nav>
+    </section>
+  </div>
+</footer>
