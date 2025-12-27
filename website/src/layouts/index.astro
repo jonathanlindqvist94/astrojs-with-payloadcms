@@ -1,15 +1,6 @@
 ---
 import Nav from "../components/navigation/nav.astro";
-
-// import { getPayload } from "payload";
-// import config from "payload-app/src/payload.config";
-
-// const payload = await getPayload({ config });
-
-// const navigation = await payload.findGlobal({
-//   slug: "navigation",
-// });
-// console.log(navigation);
+import Footer from "../components/footer/footer.astro";
 ---
 
 <html lang="en">
@@ -17,13 +8,11 @@ import Nav from "../components/navigation/nav.astro";
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
-  <body>
+  <body class="flex flex-col min-h-screen h-full">
     <Nav />
-
-    <slot />
-
-    <footer class="mt-40">
-      <p>Footer</p>
-    </footer>
+    <main class="max-w-layout-max-width px-inline-padding mx-auto flex-grow">
+      <slot />
+    </main>
+    <Footer class="self-end" />
   </body>
 </html>
