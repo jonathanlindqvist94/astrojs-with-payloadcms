@@ -528,10 +528,24 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Navigation {
   id: string;
   logo?: (string | null) | Media;
-  links?:
+  displayAs?: ('hamburger' | 'normal') | null;
+  navItems?:
     | {
-        page?: (string | null) | Post;
-        url?: string | null;
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: string | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
         id?: string | null;
       }[]
     | null;
@@ -551,14 +565,46 @@ export interface Footer {
   };
   middleColumn?: {
     title?: string | null;
-    content?: string | null;
+    navItemsMiddleCol?:
+      | {
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: string | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+          };
+          id?: string | null;
+        }[]
+      | null;
   };
   rightColumn?: {
     title?: string | null;
-    linksArray?:
+    navItemsRightCol?:
       | {
-          label?: string | null;
-          url?: string | null;
+          link: {
+            type?: ('reference' | 'custom') | null;
+            newTab?: boolean | null;
+            reference?:
+              | ({
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null)
+              | ({
+                  relationTo: 'posts';
+                  value: string | Post;
+                } | null);
+            url?: string | null;
+            label: string;
+          };
           id?: string | null;
         }[]
       | null;
@@ -572,11 +618,19 @@ export interface Footer {
  */
 export interface NavigationSelect<T extends boolean = true> {
   logo?: T;
-  links?:
+  displayAs?: T;
+  navItems?:
     | T
     | {
-        page?: T;
-        url?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
         id?: T;
       };
   updatedAt?: T;
@@ -599,17 +653,37 @@ export interface FooterSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        content?: T;
+        navItemsMiddleCol?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              id?: T;
+            };
       };
   rightColumn?:
     | T
     | {
         title?: T;
-        linksArray?:
+        navItemsRightCol?:
           | T
           | {
-              label?: T;
-              url?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
               id?: T;
             };
       };

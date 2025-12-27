@@ -1,5 +1,5 @@
-import { pages } from 'next/dist/build/templates/app-page'
 import { GlobalConfig } from 'payload'
+import { link } from '../../fields/link'
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
@@ -10,50 +10,26 @@ export const Navigation: GlobalConfig = {
       relationTo: 'media',
     },
     {
-      name: 'links',
-      type: 'array',
-      maxRows: 5,
-      fields: [
-        {
-          name: 'page',
-          type: 'relationship',
-          relationTo: 'posts',
-        },
-        {
-          name: 'url',
-          type: 'text',
-          hooks: {
-            beforeValidate: [
-              async ({ req, siblingData }) => {
-                // siblingData contains the other fields in this array item (e.g., page)
-                const pageId = siblingData?.page
-
-                if (!pageId) {
-                  return ''
-                }
-
-                // If it's already populated (full object), use it directly
-                if (typeof pageId === 'object' && pageId?.slug) {
-                  return `/posts/${pageId.slug}`
-                }
-
-                // Otherwise fetch the post by ID
-                const post = await req.payload.findByID({
-                  collection: 'posts',
-                  id: pageId,
-                  depth: 0,
-                })
-
-                if (post?.slug) {
-                  return `/posts/${post.slug}`
-                }
-
-                return ''
-              },
-            ],
-          },
-        },
+      name: 'displayAs',
+      label: 'Välj om du vill att menyn ska visas som en hamburgarmenu hela tiden eller inte.',
+      type: 'radio',
+      options: [
+        { label: 'Hamburgarmeny', value: 'hamburger' },
+        { label: 'Vanlig meny', value: 'normal' },
       ],
+    },
+    {
+      name: 'navItems',
+      type: 'array',
+      fields: [
+        link({
+          appearances: false,
+        }),
+      ],
+      maxRows: 6,
+      admin: {
+        initCollapsed: true,
+      },
     },
   ],
 }
