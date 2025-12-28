@@ -220,7 +220,7 @@ export interface Post {
      * Här väljer du vilka content block du vill använda på denna post.
      */
     contentBlocks?: {
-      blocks?: Accordion[] | null;
+      blocks?: (Accordion | InfoBlock)[] | null;
     };
   };
   updatedAt: string;
@@ -256,6 +256,25 @@ export interface Accordion {
   id?: string | null;
   blockName?: string | null;
   blockType: 'accordion';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Info Block".
+ */
+export interface InfoBlock {
+  title?: string | null;
+  description?: string | null;
+  innerContent?:
+    | {
+        innerHeading?: string | null;
+        innerDescription?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  image?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'infoBlock';
 }
 /**
  * Pages collection
@@ -450,6 +469,7 @@ export interface PostsSelect<T extends boolean = true> {
                 | T
                 | {
                     accordion?: T | AccordionSelect<T>;
+                    infoBlock?: T | InfoBlockSelect<T>;
                   };
             };
       };
@@ -468,6 +488,24 @@ export interface AccordionSelect<T extends boolean = true> {
   openAtOnce?: T;
   id?: T;
   blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Info Block_select".
+ */
+export interface InfoBlockSelect {
+  title?: boolean;
+  description?: boolean;
+  innerContent?:
+    | boolean
+    | {
+        innerHeading?: boolean;
+        innerDescription?: boolean;
+        id?: boolean;
+      };
+  image?: boolean;
+  id?: boolean;
+  blockName?: boolean;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
