@@ -9,7 +9,7 @@ const imageSrc = image?.url
   aria-labelledby="infoBlock-title"
   class="max-w-layout-max-width px-inline-padding mb-10"
 >
-  <div class="flex flex-col gap-2 w-1/2 mb-10">
+  <div class="flex flex-col gap-2 md:w-2/3 w-full mb-10">
     <h2
       id="infoBlock-title"
       class="text-heading2-responsive-font-size font-bold"
@@ -18,8 +18,8 @@ const imageSrc = image?.url
     </h2>
     <p class="!text-gray-500">{description}</p>
   </div>
-  <div class="flex flex-row gap-8">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 w-1/2">
+  <div class="flex md:flex-row flex-col gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:w-1/2 w-full">
       {
         innerContent.map((item) => {
           const [number, ...rest] = item.innerHeading.split(" ");
@@ -36,6 +36,6 @@ const imageSrc = image?.url
         })
       }
     </div>
-    <img src={imageSrc} alt={image.alt} class="w-1/2 rounded-lg" />
+    <img src={imageSrc} alt={image.alt} class="md:w-1/2 w-full rounded-lg" />
   </div>
 </section>
