@@ -10,6 +10,7 @@ import type { Block } from "../../../../payload-app/src/index";
 // ... add more as needed
 
 import AccordionBlock from "../accordion/accordion.astro";
+import InfoBlock from "../infoBlock.astro";
 
 interface Props {
   block: Block;
@@ -24,11 +25,14 @@ const blockComponents = {
   // image: ImageBlock,
   // cta: CallToActionBlock,
   accordion: AccordionBlock,
+  infoBlock: InfoBlock,
   // ... add more mappings
 };
 
 const BlockComponent = blockComponents[block.blockType];
-// console.log(block);
+if (BlockComponent === InfoBlock) {
+  console.log(block);
+}
 ---
 
 {
