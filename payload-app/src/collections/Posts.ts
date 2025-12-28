@@ -1,3 +1,4 @@
+import { InfoBlock } from '../blocks/infoBlock/infoBlock'
 import { accordion } from '../blocks/accordion/accordion'
 import { defaultHero } from '../blocks/hero/defaultHero'
 import { CollectionConfig } from 'payload'
@@ -76,7 +77,7 @@ export const Posts: CollectionConfig = {
                   name: 'blocks',
                   label: 'Content blocks',
                   type: 'blocks',
-                  blocks: [accordion],
+                  blocks: [accordion, InfoBlock],
                 },
               ],
             },
