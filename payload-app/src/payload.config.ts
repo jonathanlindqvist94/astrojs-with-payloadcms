@@ -11,6 +11,7 @@ import { Navigation } from './globals/navigation/config'
 import { Footer } from './globals/footer/config'
 import { Posts } from './collections/Posts'
 import { Pages } from './collections/Pages'
+import { Homepage } from './globals/homepage/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,7 +24,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts, Pages],
-  globals: [Navigation, Footer],
+  globals: [Navigation, Footer, Homepage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

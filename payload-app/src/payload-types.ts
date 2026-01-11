@@ -94,10 +94,12 @@ export interface Config {
   globals: {
     navigation: Navigation;
     footer: Footer;
+    homepage: Homepage;
   };
   globalsSelect: {
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: null;
   user: User & {
@@ -206,75 +208,79 @@ export interface Post {
     | null;
   group?: {
     heroBlocks?:
-      | {
-          title?: string | null;
-          image?: (string | null) | Media;
-          content?: string | null;
-          'image position'?: ('Left' | 'Right') | null;
-          id?: string | null;
-          blockName?: string | null;
-          blockType: 'defaultHero';
-        }[]
+      | (
+          | {
+              title?: string | null;
+              image?: (string | null) | Media;
+              content?: string | null;
+              'image position'?: ('Left' | 'Right') | null;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'defaultHero';
+            }
+          | {
+              role?: string | null;
+              name?: string | null;
+              description?: string | null;
+              image?: (string | null) | Media;
+              group?: {
+                bornIn?: string | null;
+                experience?: string | null;
+                bornDate?: string | null;
+                socialLinks?:
+                  | {
+                      link: {
+                        type?: ('reference' | 'custom') | null;
+                        newTab?: boolean | null;
+                        reference?:
+                          | ({
+                              relationTo: 'pages';
+                              value: string | Page;
+                            } | null)
+                          | ({
+                              relationTo: 'posts';
+                              value: string | Post;
+                            } | null);
+                        url?: string | null;
+                        label: string;
+                      };
+                      id?: string | null;
+                    }[]
+                  | null;
+              };
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'personalHero';
+            }
+        )[]
       | null;
     /**
      * Här väljer du vilka content block du vill använda på denna post.
      */
     contentBlocks?: {
-      blocks?: (Accordion | InfoBlock)[] | null;
+      blocks?:
+        | (
+            | Accordion
+            | InfoBlock
+            | {
+                title?: string | null;
+                description?: string | null;
+                imageArray?:
+                  | {
+                      image?: (string | null) | Media;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'contentWithMedia';
+              }
+          )[]
+        | null;
     };
   };
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Accordion".
- */
-export interface Accordion {
-  title?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  image?: (string | null) | Media;
-  imagePosition?: ('Left' | 'Right') | null;
-  /**
-   * Om du kryssar för denna, så kan bara en accordion vara öppen samtidigt. Så öppnar man en och sedan en ny så kommer den första att stängas.
-   */
-  openAtOnce?: ('One' | 'Multiple') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'accordion';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Info Block".
- */
-export interface InfoBlock {
-  title?: string | null;
-  description?: string | null;
-  innerContent?:
-    | {
-        innerHeading?: string | null;
-        innerDescription?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  image?: (string | null) | Media;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'infoBlock';
 }
 /**
  * Pages collection
@@ -307,6 +313,61 @@ export interface Page {
   };
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Accordion".
+ */
+export interface Accordion {
+  items?:
+    | {
+        title?: string | null;
+        content?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  image?: (string | null) | Media;
+  imagePosition?: ('Left' | 'Right') | null;
+  /**
+   * Om du kryssar för denna, så kan bara en accordion vara öppen samtidigt. Så öppnar man en och sedan en ny så kommer den första att stängas.
+   */
+  openAtOnce?: ('One' | 'Multiple') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'accordion';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Info Block".
+ */
+export interface InfoBlock {
+  title?: string | null;
+  description?: string | null;
+  innerContent?:
+    | {
+        innerHeading?: string | null;
+        innerDescription?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  image?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'infoBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -461,6 +522,37 @@ export interface PostsSelect<T extends boolean = true> {
                     id?: T;
                     blockName?: T;
                   };
+              personalHero?:
+                | T
+                | {
+                    role?: T;
+                    name?: T;
+                    description?: T;
+                    image?: T;
+                    group?:
+                      | T
+                      | {
+                          bornIn?: T;
+                          experience?: T;
+                          bornDate?: T;
+                          socialLinks?:
+                            | T
+                            | {
+                                link?:
+                                  | T
+                                  | {
+                                      type?: T;
+                                      newTab?: T;
+                                      reference?: T;
+                                      url?: T;
+                                      label?: T;
+                                    };
+                                id?: T;
+                              };
+                        };
+                    id?: T;
+                    blockName?: T;
+                  };
             };
         contentBlocks?:
           | T
@@ -470,6 +562,20 @@ export interface PostsSelect<T extends boolean = true> {
                 | {
                     accordion?: T | AccordionSelect<T>;
                     infoBlock?: T | InfoBlockSelect<T>;
+                    contentWithMedia?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          imageArray?:
+                            | T
+                            | {
+                                image?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
                   };
             };
       };
@@ -481,8 +587,13 @@ export interface PostsSelect<T extends boolean = true> {
  * via the `definition` "Accordion_select".
  */
 export interface AccordionSelect<T extends boolean = true> {
-  title?: T;
-  content?: T;
+  items?:
+    | T
+    | {
+        title?: T;
+        content?: T;
+        id?: T;
+      };
   image?: T;
   imagePosition?: T;
   openAtOnce?: T;
@@ -652,6 +763,71 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: string;
+  title: string;
+  group?: {
+    heroBlocks?:
+      | (
+          | {
+              title?: string | null;
+              image?: (string | null) | Media;
+              content?: string | null;
+              'image position'?: ('Left' | 'Right') | null;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'defaultHero';
+            }
+          | {
+              role?: string | null;
+              name?: string | null;
+              description?: string | null;
+              image?: (string | null) | Media;
+              group?: {
+                bornIn?: string | null;
+                experience?: string | null;
+                bornDate?: string | null;
+                socialLinks?:
+                  | {
+                      link: {
+                        type?: ('reference' | 'custom') | null;
+                        newTab?: boolean | null;
+                        reference?:
+                          | ({
+                              relationTo: 'pages';
+                              value: string | Page;
+                            } | null)
+                          | ({
+                              relationTo: 'posts';
+                              value: string | Post;
+                            } | null);
+                        url?: string | null;
+                        label: string;
+                      };
+                      id?: string | null;
+                    }[]
+                  | null;
+              };
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'personalHero';
+            }
+        )[]
+      | null;
+    /**
+     * Här väljer du vilka content block du vill använda på denna post.
+     */
+    contentBlocks?: {
+      blocks?: (Accordion | InfoBlock)[] | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation_select".
  */
 export interface NavigationSelect<T extends boolean = true> {
@@ -723,6 +899,75 @@ export interface FooterSelect<T extends boolean = true> {
                     label?: T;
                   };
               id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  title?: T;
+  group?:
+    | T
+    | {
+        heroBlocks?:
+          | T
+          | {
+              defaultHero?:
+                | T
+                | {
+                    title?: T;
+                    image?: T;
+                    content?: T;
+                    'image position'?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+              personalHero?:
+                | T
+                | {
+                    role?: T;
+                    name?: T;
+                    description?: T;
+                    image?: T;
+                    group?:
+                      | T
+                      | {
+                          bornIn?: T;
+                          experience?: T;
+                          bornDate?: T;
+                          socialLinks?:
+                            | T
+                            | {
+                                link?:
+                                  | T
+                                  | {
+                                      type?: T;
+                                      newTab?: T;
+                                      reference?: T;
+                                      url?: T;
+                                      label?: T;
+                                    };
+                                id?: T;
+                              };
+                        };
+                    id?: T;
+                    blockName?: T;
+                  };
+            };
+        contentBlocks?:
+          | T
+          | {
+              blocks?:
+                | T
+                | {
+                    accordion?: T | AccordionSelect<T>;
+                    infoBlock?: T | InfoBlockSelect<T>;
+                  };
             };
       };
   updatedAt?: T;

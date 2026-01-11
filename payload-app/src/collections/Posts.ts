@@ -1,8 +1,18 @@
 import { InfoBlock } from '../blocks/infoBlock/infoBlock'
-import { accordion } from '../blocks/accordion/accordion'
-import { defaultHero } from '../blocks/hero/defaultHero'
+import { Accordion } from '../blocks/accordion/accordion'
+import { DefaultHero } from '../blocks/hero/defaultHero'
 import { CollectionConfig } from 'payload'
 import { slugField } from 'payload'
+import { PersonalHero } from '../blocks/hero/personalHero'
+import { ContentWithMedia } from '../blocks/contentWithMedia/contentWithMedia'
+import {
+  lexicalEditor,
+  BoldFeature,
+  ItalicFeature,
+  UnderlineFeature,
+  HeadingFeature,
+  FixedToolbarFeature,
+} from '@payloadcms/richtext-lexical'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -29,6 +39,17 @@ export const Posts: CollectionConfig = {
     {
       name: 'ingress',
       type: 'richText',
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          BoldFeature(),
+          ItalicFeature(),
+          UnderlineFeature(),
+          HeadingFeature({
+            enabledHeadingSizes: ['h2', 'h3'],
+          }),
+          FixedToolbarFeature(),
+        ],
+      }),
     },
     {
       name: 'tags',
@@ -63,7 +84,13 @@ export const Posts: CollectionConfig = {
                 description: 'Här väljer du vilket hero block du vill använda på denna post.',
               },
               fields: [
-                { name: 'heroBlocks', label: 'Hero blocks', type: 'blocks', blocks: [defaultHero] },
+                {
+                  name: 'heroBlocks',
+                  label: 'Hero blocks',
+                  type: 'blocks',
+                  maxRows: 1,
+                  blocks: [DefaultHero, PersonalHero],
+                },
               ],
             },
             {
@@ -77,7 +104,7 @@ export const Posts: CollectionConfig = {
                   name: 'blocks',
                   label: 'Content blocks',
                   type: 'blocks',
-                  blocks: [accordion, InfoBlock],
+                  blocks: [Accordion, InfoBlock, ContentWithMedia],
                 },
               ],
             },
