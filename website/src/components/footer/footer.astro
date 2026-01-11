@@ -1,6 +1,7 @@
 ---
 import { getPayload } from "payload";
 import { config } from "../../../../payload-app/src/index";
+import Text from "../text/text.astro";
 
 const payload = await getPayload({ config });
 const footerData = await payload.findGlobal({ slug: "footer" });
@@ -11,17 +12,29 @@ const footerData = await payload.findGlobal({ slug: "footer" });
     class="max-w-layout-max-width px-inline-padding mx-auto py-12 grid md:grid-cols-3 grid-cols-1 gap-20"
   >
     <section aria-labelledby="left-column-title">
-      <h2 class="text-2xl font-semibold mb-3" id="left-column-title">
+      <Text
+        as="h2"
+        class=""
+        id="left-column-title"
+        font="fontHeadings"
+        weight="semibold"
+      >
         {footerData.leftColumn?.title}
-      </h2>
-      <p>
+      </Text>
+      <Text as="p" font="fontBody">
         {footerData.leftColumn?.content}
-      </p>
+      </Text>
     </section>
     <section aria-labelledby="center-column-title">
-      <h2 class="text-2xl font-semibold mb-3" id="center-column-title">
+      <Text
+        as="h2"
+        class=""
+        id="center-column-title"
+        font="fontHeadings"
+        weight="semibold"
+      >
         {footerData.middleColumn?.title}
-      </h2>
+      </Text>
       <nav>
         <ul>
           {
@@ -36,7 +49,7 @@ const footerData = await payload.findGlobal({ slug: "footer" });
               return (
                 <li>
                   <a
-                    class="focus:underline hover:underline hover:text-blue-700"
+                    class="focus:underline font-family-body hover:underline hover:text-blue-700"
                     {...(openInNewTab
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
@@ -52,9 +65,15 @@ const footerData = await payload.findGlobal({ slug: "footer" });
       </nav>
     </section>
     <section aria-labelledby="right-column-title">
-      <h2 class="text-2xl font-semibold mb-3" id="right-column-title">
+      <Text
+        as="h2"
+        class=""
+        id="right-column-title"
+        font="fontHeadings"
+        weight="semibold"
+      >
         {footerData.rightColumn?.title}
-      </h2>
+      </Text>
       <nav>
         <ul>
           {
@@ -69,7 +88,7 @@ const footerData = await payload.findGlobal({ slug: "footer" });
               return (
                 <li>
                   <a
-                    class="focus:underline hover:underline hover:text-blue-700"
+                    class="focus:underline hover:underline hover:text-blue-700 font-family-body"
                     {...(openInNewTab
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}

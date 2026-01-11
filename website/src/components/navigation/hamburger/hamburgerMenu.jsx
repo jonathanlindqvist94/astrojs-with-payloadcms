@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { MenuIcon } from "../../../icons/menu";
+import Text from "../../text/text.jsx";
 
 export const HamburgerMenu = ({ items }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +13,7 @@ export const HamburgerMenu = ({ items }) => {
       <button
         aria-expanded={isOpen ? "true" : "false"}
         aria-label={isOpen ? "Close menu" : "Open menu"}
-        className={`cursor-pointer flex gap-2 h-full justify-center items-center transition-all hover:bg-green-400 px-inline-padding ${isOpen ? "bg-green-400" : ""}`}
+        className={`cursor-pointer font-family-primary flex gap-2 h-full justify-center items-center transition-all hover:bg-green-400 px-inline-padding ${isOpen ? "bg-green-400" : ""}`}
         onClick={toggleMenu}
       >
         Meny
@@ -36,7 +37,9 @@ export const HamburgerMenu = ({ items }) => {
                 href={item.slug}
                 className="p-4 hover:underline focus:underline transition-all w-full"
               >
-                {item.label}
+                <Text as="span" className="block">
+                  {item.label}
+                </Text>
               </a>
             </li>
           ))}
