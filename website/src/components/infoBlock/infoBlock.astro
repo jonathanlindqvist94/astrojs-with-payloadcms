@@ -1,0 +1,54 @@
+---
+import Text from "../text/text.astro";
+
+const { title, description, innerContent, image } = Astro.props;
+const imageSrc = image?.url
+  ? `${import.meta.env.PUBLIC_PAYLOAD_URL}${image.url}`
+  : "";
+---
+
+<section
+  aria-labelledby="infoBlock-title"
+  class="max-w-layout-max-width px-inline-padding mb-10"
+>
+  <div class="flex flex-col gap-2 md:w-2/3 w-full mb-10">
+    <Text as="h2" id="infoBlock-title" font="fontHeadings" weight="black">
+      {title}
+    </Text>
+    <Text as="p" class="!text-gray-500" font="fontBody">{description}</Text>
+  </div>
+  <div class="flex md:flex-row flex-col gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:w-1/2 w-full">
+      {
+        innerContent.map((item) => {
+          const [number, ...rest] = item.innerHeading.split(" ");
+          const text = rest.join(" ");
+          return (
+            <div>
+              <Text
+                as="h3"
+                class="font-bold text-3xl mb-2"
+                font="fontHeadings"
+                weight="semibold"
+              >
+                {number}
+                <Text
+                  as="span"
+                  font="fontHeadings"
+                  class="block text-lg"
+                  weight="semibold"
+                >
+                  {text}
+                </Text>
+              </Text>
+              <Text as="p" class="!text-gray-500" font="fontBody">
+                {item.innerDescription}
+              </Text>
+            </div>
+          );
+        })
+      }
+    </div>
+    <img src={imageSrc} alt={image.alt} class="md:w-1/2 w-full rounded-lg" />
+  </div>
+</section>

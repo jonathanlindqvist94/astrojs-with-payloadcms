@@ -1,4 +1,5 @@
 ---
+import Text from "../../text/text.astro";
 import { MenuIcon } from "src/icons/menu";
 const { items } = Astro.props;
 ---
@@ -15,7 +16,7 @@ const { items } = Astro.props;
             href={item.slug}
             class="p-4 group-hover:bg-red-500 group-focus-within:bg-red-500 transition-all"
           >
-            {item.label}
+            <Text as="span">{item.label}</Text>
           </a>
         </li>
       ))

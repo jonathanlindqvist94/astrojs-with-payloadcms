@@ -1,13 +1,14 @@
 ---
+import Text from "../text/text.astro";
+
 interface Props {
   title: string;
   content: string;
 }
 
-const { title, content, imagePosition, image, openAtOnce } = Astro.props;
+const { items, image, imagePosition, openAtOnce } = Astro.props;
 // console.log(content.root.children.map((item) => item.type));
 // console.log(imagePosition);
-console.log(image);
 // console.log(openAtOnce);
 const imageSrc = image?.url
   ? `${import.meta.env.PUBLIC_PAYLOAD_URL}${image.url}`
@@ -15,7 +16,7 @@ const imageSrc = image?.url
 ---
 
 <div
-  class={"layout-max-width w-full grid-layout-accordion relative max-h-[45rem] mb-10"}
+  class={"layout-max-width w-full grid-layout-accordion relative max-h-180 mb-10"}
 >
   <img
     src={imageSrc}
@@ -25,35 +26,55 @@ const imageSrc = image?.url
   <div
     class={"flex flex-col row-start-1 lg:col-start-4 sm:col-start-3 col-span-full sm:my-30 h-max shadow-lg bg-white py-6 px-4"}
   >
-    <details
-      class={"col-span-full accordion-sub-grid group"}
-      name={"accordion"}
-    >
-      <summary
-        class={"flex p-4 justify-between text-2xl font-medium cursor-pointer hover:underline"}
-      >
-        Accordion Titel
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="32px"
-          viewBox="0 -960 960 960"
-          width="32px"
-          fill="#1f1f1f"
-          class="group-open:rotate-180 transition-transform"
-        >
-          <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"
-          ></path>
-        </svg>
-      </summary>
-      <div class={"ml-5 pl-4 border-l-2 border-blue-400 "}>
-        <p class={"!text-gray-500"}>
-          Nulla nisi ut anim deserunt officia sunt non mollit cupidatat officia
-          in. Dolor consectetur magna anim est dolor pariatur incididunt
-          cupidatat incididunt do anim. Eu commodo magna proident laboris
-          aliquip exercitation ullamco. Deserunt est elit veniam. Exercitation
-          pariatur irure in.
-        </p>
-      </div>
-    </details>
+    {
+      items.map((item) => {
+        return (
+          <details
+            class={"col-span-full accordion-sub-grid group"}
+            name={openAtOnce === "One" ? "accordion" : ""}
+          >
+            <summary
+              class={
+                item.length > 1
+                  ? "flex justify-between cursor-pointer hover:underline"
+                  : "flex justify-between cursor-pointer hover:underline mb-4"
+              }
+            >
+              <Text
+                as="h2"
+                class=""
+                color="black"
+                font="fontHeadings"
+                margin={false}
+                weight="black"
+              >
+                {item.title}
+              </Text>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="32px"
+                viewBox="0 -960 960 960"
+                width="32px"
+                fill="#1f1f1f"
+                class="group-open:rotate-180 transition-transform self-center"
+              >
+                <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+              </svg>
+            </summary>
+            {item.content.root.children.map((paragraph) => {
+              return (
+                <div class={"ml-5 pl-4 border-l-2 border-blue-400 mt-4"}>
+                  {paragraph.children.map((textNode) => (
+                    <Text as="p" class="!text-gray-500" font="fontBody">
+                      {textNode.text}
+                    </Text>
+                  ))}
+                </div>
+              );
+            })}
+          </details>
+        );
+      })
+    }
   </div>
 </div>
