@@ -61,8 +61,12 @@
   --text-heading2-responsive-font-size: clamp(
     1.5rem,
     1.1341rem + 1.561vw,
-    2.5rem
+    2rem
   );
+
+  /* Font Family */
+  --font-family-headings: "Montserrat", monospace;
+  --font-family-body: "Roboto", sans-serif;
 
   /**
   *Layout width including padding
@@ -82,16 +86,15 @@
 html {
   scrollbar-gutter: stable;
 }
-
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
-p {
-  @apply text-primary-black;
+h6 {
+  font-family: var(--font-family-headings);
 }
+
 .layout-max-width {
   @apply max-w-layout-max-width mx-auto px-inline-padding w-full;
 }
