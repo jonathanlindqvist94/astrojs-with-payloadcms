@@ -1,0 +1,61 @@
+---
+import Text from "../text/text.astro";
+
+const { role, name, description, image, group } = Astro.props;
+const imageSrc = image?.url
+  ? `${import.meta.env.PUBLIC_PAYLOAD_URL}${image.url}`
+  : "";
+const readableDate = new Date(group.bornDate).toLocaleDateString("sv-SE", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<section class="max-w-layout-max-width px-inline-padding flex gap-30 mb-20">
+  <div class="max-w-[70%]">
+    <Text as="p" margin={false} font="fontBody" class="!text-blue-700"
+      >{role}</Text
+    >
+    <Text as="h1" class="" font="fontHeadings">
+      {name}
+    </Text>
+    <Text as="p" margin={false} font="fontBody" class="!text-blue-700"
+      >{description}</Text
+    >
+    <div
+      class="ml-12 pl-8 mt-8 border-l-2 border-blue-400 py-4 flex flex-col gap-1"
+    >
+      <Text as="p" margin={false} font="fontBody">
+        <Text as="span" class="text-stone-400">Född i</Text>
+        {group.bornIn}</Text
+      >
+      <Text as="p" margin={false} font="fontBody">
+        <Text as="span" class="text-stone-400">Erfarenhet</Text>
+        {group.experience}</Text
+      >
+      <date>
+        <Text as="span" font="fontBody" class="text-stone-400">Född den</Text>
+        {readableDate}</date
+      >
+      <ul class="flex gap-2">
+        {
+          group.socialLinks.map((link) => {
+            return (
+              <li>
+                <a href={link.link.url} class="font-family-body">
+                  {link.link.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </div>
+  <img
+    src={imageSrc}
+    alt={image.alt}
+    class="max-w-[25%] w-full rounded-tr-[8rem] rounded-bl-[8rem] rounded-tl-lg rounded-br-lg h-100 aspect-square shadow-2xl p-4 object-cover"
+  />
+</section>
