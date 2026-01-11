@@ -1,0 +1,168 @@
+---
+// Text.astro
+export interface Props {
+  /** The html-tag that will be outputted */
+  as:
+    | "mega"
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "p"
+    | "paragraph"
+    | "span"
+    | "preamble"
+    | "label"
+    | "screenReader"
+    | "richtext";
+
+  /** The style that will be used (instead of the tag default style) */
+  styleAs?: Props["as"];
+
+  /** Which font the text should represent */
+  font?: "fontHeadings" | "fontBody";
+
+  /** Font weight */
+  weight?:
+    | "thin"
+    | "extralight"
+    | "light"
+    | "default"
+    | "medium"
+    | "semibold"
+    | "bold"
+    | "extrabold"
+    | "black";
+
+  /** Option to include default text margin */
+  margin?: boolean;
+
+  /** If the text should break words */
+  wordBreak?: boolean;
+
+  /** Text color */
+  color?: "white" | "green" | "black" | "blue";
+
+  /** Additional classes */
+  class?: string;
+
+  /** Allow any other HTML attributes */
+  [key: string]: any;
+}
+
+const TagMapper: Record<string, string> = {
+  mega: "h1",
+  h1: "h1",
+  h1Columns: "h1",
+  h2: "h2",
+  h3: "h3",
+  h4: "h4",
+  h5: "h5",
+  h6: "h6",
+  title2: "p",
+  p: "p",
+  plus: "p",
+  pLarge: "p",
+  pBold: "p",
+  paragraph: "p",
+  preamble: "p",
+  label: "p",
+  artnr: "p",
+  span: "span",
+  substanceName: "p",
+  caption: "caption",
+  screenReader: "span",
+  richtext: "div",
+  menuTitle: "h2",
+};
+
+const TypographyClasses: Record<string, string> = {
+  mega: "text-header-responsive-font-size",
+  h1: "text-subheader-responsive-font-size",
+  h2: "text-heading2-responsive-font-size",
+  h3: "",
+  h4: "",
+  h5: "",
+  h6: "",
+  title2: "",
+  p: "",
+  span: "",
+  preamble: "",
+  label: "",
+  screenReader: "",
+  richtext: "",
+};
+
+const TypographyMarginClasses: Record<string, string> = {
+  mega: "mb-4",
+  h1: "mb-4",
+  h2: "mb-4",
+  h3: "",
+  h4: "",
+  h5: "",
+  h6: "",
+  p: "mb-4",
+  paragraph: "",
+  span: "",
+  preamble: "",
+  label: "",
+  screenReader: "",
+  richtext: "",
+};
+
+const TypographyColorClasses: Record<string, string> = {
+  white: "text-white",
+  black: "text-black",
+  blue: "text-blue-700",
+};
+
+const TypographyFont: Record<string, string> = {
+  fontHeadings: "font-family-headings",
+  fontBody: "font-family-body",
+};
+
+const TypographyWeight: Record<string, string> = {
+  thin: "font-thin",
+  extralight: "font-extralight",
+  light: "font-light",
+  default: "font-normal",
+  medium: "font-medium",
+  semibold: "font-semibold",
+  bold: "font-bold",
+  extrabold: "font-extrabold",
+  black: "font-black",
+};
+
+const {
+  as,
+  styleAs,
+  font,
+  weight,
+  margin = true,
+  wordBreak,
+  color,
+  class: className,
+  ...htmlAttributes
+} = Astro.props;
+
+const Tag = TagMapper[as] as keyof HTMLElementTagNameMap;
+const style = styleAs || as;
+
+const classes = [
+  TypographyClasses[style],
+  font && TypographyFont[font],
+  margin && TypographyMarginClasses[style],
+  color && TypographyColorClasses[color],
+  wordBreak && "break-words",
+  weight && TypographyWeight[weight],
+  className,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<Tag class={classes} {...htmlAttributes}>
+  <slot />
+</Tag>
