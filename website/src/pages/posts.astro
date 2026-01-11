@@ -6,20 +6,19 @@ import { getPayload } from "payload";
 import { config } from "../../../payload-app/src/index";
 
 const payload = await getPayload({ config });
-const homepage = await payload.findGlobal({
-  slug: "homepage",
+const posts = await payload.find({
+  collection: "posts",
 });
 ---
 
 <Layout>
   {
-    homepage.group.heroBlocks && (
-      <BlockRenderer blocks={homepage.group.heroBlocks} />
-    )
-  }
-  {
-    homepage.group?.contentBlocks && (
-      <BlockRenderer blocks={homepage.group?.contentBlocks?.blocks} />
-    )
+    posts.docs.map((post) => (
+      <>
+        <BlockRenderer blocks={post.group?.heroBlocks} />
+        {/* Render content blocks */}
+        <BlockRenderer blocks={post.group?.contentBlocks?.blocks} />
+      </>
+    ))
   }
 </Layout>

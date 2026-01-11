@@ -2,45 +2,40 @@
 // components/BlockRenderer.astro
 import type { Block } from "../../../../payload-app/src/index";
 
-// Import all your block components
-// import HeroBlock from "./blocks/HeroBlock.astro";
-// import TextBlock from "./blocks/TextBlock.astro";
-// import ImageBlock from "./blocks/ImageBlock.astro";
-// import CallToActionBlock from "./blocks/CTABlock.astro";
-// ... add more as needed
-
 import AccordionBlock from "../accordion/accordion.astro";
-import InfoBlock from "../infoBlock.astro";
+import ContentWithMedia from "../contentWithMedia/contentWithMedia.astro";
+import PersonalHero from "../hero/personalHero.astro";
+import InfoBlock from "../infoBlock/infoBlock.astro";
+import Text from "../text/text.astro";
 
 interface Props {
-  block: Block;
+  blocks: Block | Block[]; // Accept either single block or array
 }
 
-const { block } = Astro.props;
+const { blocks } = Astro.props;
 
 // Map block types to components
 const blockComponents = {
-  // hero: HeroBlock,
-  // text: TextBlock,
-  // image: ImageBlock,
-  // cta: CallToActionBlock,
+  personalHero: PersonalHero,
   accordion: AccordionBlock,
   infoBlock: InfoBlock,
-  // ... add more mappings
+  contentWithMedia: ContentWithMedia,
 };
 
-const BlockComponent = blockComponents[block.blockType];
-if (BlockComponent === InfoBlock) {
-  console.log(block);
-}
+// Normalize to array
+const blockArray = Array.isArray(blocks) ? blocks : [blocks];
+console.log(blockArray);
 ---
 
 {
-  BlockComponent ? (
-    <BlockComponent {...block} />
-  ) : (
-    <div class="block-error">
-      <p>Unknown block type: {block.blockType}</p>
-    </div>
-  )
+  blockArray.map((block) => {
+    const BlockComponent = blockComponents[block.blockType];
+    return BlockComponent ? (
+      <BlockComponent {...block} />
+    ) : (
+      <div class="block-error">
+        <Text as="span">Unknown block type: {block.blockType}</Text>
+      </div>
+    );
+  })
 }

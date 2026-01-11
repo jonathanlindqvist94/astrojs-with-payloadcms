@@ -8,29 +8,36 @@ import {
   UnderlineFeature,
 } from '@payloadcms/richtext-lexical'
 
-export const accordion: Block = {
+export const Accordion: Block = {
   slug: 'accordion',
   interfaceName: 'Accordion',
   imageURL: '/api/previewBlockImages/file/accordionDesign.webp',
   fields: [
     {
-      name: 'title',
-      type: 'text',
-    },
-    {
-      name: 'content',
-      type: 'richText',
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [
-          BoldFeature(),
-          ItalicFeature(),
-          UnderlineFeature(),
-          HeadingFeature({
-            enabledHeadingSizes: ['h2', 'h3'],
+      name: 'items',
+      type: 'array',
+      maxRows: 4,
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+        },
+        {
+          name: 'content',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ defaultFeatures }) => [
+              BoldFeature(),
+              ItalicFeature(),
+              UnderlineFeature(),
+              HeadingFeature({
+                enabledHeadingSizes: ['h2', 'h3'],
+              }),
+              FixedToolbarFeature(),
+            ],
           }),
-          FixedToolbarFeature(),
-        ],
-      }),
+        },
+      ],
     },
     {
       name: 'image',
