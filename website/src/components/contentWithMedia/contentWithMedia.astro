@@ -3,7 +3,7 @@ import Text from "../text/text.astro";
 const { title, description, imageArray } = Astro.props;
 ---
 
-<div class="flex lg:flex-row flex-col gap-10 mb-10">
+<div class="flex lg:flex-row flex-col gap-10 mb-20">
   <div class="lg:w-1/3 w-full self-center">
     <Text as="h2" font="fontHeadings" weight="bold">{title}</Text>
     <Text as="p" font="fontBody" weight="regular">{description}</Text>
