@@ -25,6 +25,26 @@ export const HamburgerMenu = ({ items }) => {
         className={`absolute z-50 right-0 top-20 size-dvw justify-end flex gap-4 bg-gradient-to-r from-green-400/40 to-green-700/50 ${isOpen ? "block" : "hidden"}`}
       >
         <menu className="w-full max-w-162 bg-white py-8 border-t border-green-700/50">
+          <li className="group flex px-inline-padding flex-col after:border-b after:border-b-gray-300">
+            <a
+              href="/"
+              className="p-4 hover:underline focus:underline transition-all w-full"
+            >
+              <Text as="span" className="block">
+                Startsida
+              </Text>
+            </a>
+          </li>
+          <li className="group flex px-inline-padding flex-col after:border-b after:border-b-gray-300">
+            <a
+              href="/blocks"
+              className="p-4 hover:underline focus:underline transition-all w-full"
+            >
+              <Text as="span" className="block">
+                Alla blocks visnings sida
+              </Text>
+            </a>
+          </li>
           {items.map((item, key) => (
             <li
               className="group flex px-inline-padding flex-col after:border-b after:border-b-gray-300"

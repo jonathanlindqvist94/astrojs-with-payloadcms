@@ -6,6 +6,26 @@ const { items } = Astro.props;
 
 <nav>
   <menu class="flex gap-4 bg-blue-400 transition-all duration-300 ease-in-out">
+    <li
+      class="group flex px-inline-padding flex-col after:border-b after:border-b-gray-300"
+    >
+      <a
+        href="/"
+        class="p-4 hover:underline focus:underline transition-all w-full"
+      >
+        <Text as="span" class="block"> Startsida </Text>
+      </a>
+    </li>
+    <li
+      class="group flex px-inline-padding flex-col after:border-b after:border-b-gray-300"
+    >
+      <a
+        href="/blocks"
+        class="p-4 hover:underline focus:underline transition-all w-full"
+      >
+        <Text as="span" class="block"> Alla blocks visnings sida </Text>
+      </a>
+    </li>
     {
       items.map((item) => (
         <li class="group flex">
