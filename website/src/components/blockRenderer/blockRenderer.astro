@@ -8,6 +8,8 @@ import PersonalHero from "../hero/personalHero.astro";
 import InfoBlock from "../infoBlock/infoBlock.astro";
 import LeftRight from "../leftRight/leftRight.astro";
 import Text from "../text/text.astro";
+import MySkills from "../mySkills/mySkills.astro";
+import AboutMeCTA from "../aboutMeCTA/aboutMeCTA.astro";
 
 interface Props {
   blocks: Block | Block[]; // Accept either single block or array
@@ -22,6 +24,8 @@ const blockComponents = {
   infoBlock: InfoBlock,
   contentWithMedia: ContentWithMedia,
   leftRight: LeftRight,
+  mySkills: MySkills,
+  aboutMeCTA: AboutMeCTA,
 };
 
 // Normalize to array

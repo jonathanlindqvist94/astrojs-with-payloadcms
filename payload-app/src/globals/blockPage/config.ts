@@ -1,3 +1,5 @@
+import { MySkills } from '../../blocks/mySkills/mySkills'
+import { AboutMeCTA } from '../../blocks/aboutMeCTA/aboutMeCTA'
 import { Accordion } from '../../blocks/accordion/accordion'
 import { ContentWithMedia } from '../../blocks/contentWithMedia/contentWithMedia'
 import { DefaultHero } from '../../blocks/hero/defaultHero'
@@ -51,7 +53,7 @@ export const Blocks: GlobalConfig = {
                   name: 'blocks',
                   label: 'Content blocks',
                   type: 'blocks',
-                  blocks: [Accordion, InfoBlock, ContentWithMedia, LeftRight],
+                  blocks: [Accordion, InfoBlock, ContentWithMedia, LeftRight, AboutMeCTA, MySkills],
                 },
               ],
             },
