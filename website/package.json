@@ -11,6 +11,11 @@
   "dependencies": {
     "@astrojs/node": "^9.0.0",
     "@astrojs/react": "^4.4.2",
+    "@fontsource/atkinson-hyperlegible-mono": "^5.2.10",
+    "@fontsource/lato": "^5.2.7",
+    "@fontsource/montserrat": "^5.2.8",
+    "@fontsource/roboto": "^5.2.9",
+    "@fontsource/tomorrow": "^5.2.8",
     "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
