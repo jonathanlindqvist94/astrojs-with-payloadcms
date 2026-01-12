@@ -1,0 +1,49 @@
+---
+import Text from "../text/text.astro";
+
+const { title, description, backgroundColor, skills } = Astro.props;
+---
+
+<section aria-labelledby="my-skills-title" class="mb-20 flex flex-col">
+  <div class={`md:w-4/5 w-full ${backgroundColor} px-10 pt-15 pb-40`}>
+    <div class="flex flex-col md:w-1/2">
+      <Text id="my-skills-title" as="h2" font="fontHeadings" weight="black">
+        {title}
+      </Text>
+      <Text as="p" font="fontBody" weight="default">
+        {description}
+      </Text>
+    </div>
+  </div>
+  <div
+    class="p-10 grid md:grid-cols-2 gap-10 md:w-[90%] w-full -mt-40 self-center"
+  >
+    {
+      skills.map((item) => {
+        const imageSrc = item.skillImage.url
+          ? `${import.meta.env.PUBLIC_PAYLOAD_URL}${item.skillImage.url}`
+          : "";
+        return (
+          <div class="flex flex-col shadow-xl bg-white p-10 w-full">
+            <img
+              src={imageSrc}
+              alt={item.skillImage.alt}
+              class="max-w-3/4 w-full mx-auto rounded-lg mb-6"
+            />
+            <Text
+              as="h2"
+              font="fontHeadings"
+              weight="black"
+              class="text-center"
+            >
+              {item.skillTitle}
+            </Text>
+            <Text as="p" font="fontBody" weight="default" class="text-center">
+              {item.skillDescription}
+            </Text>
+          </div>
+        );
+      })
+    }
+  </div>
+</section>
