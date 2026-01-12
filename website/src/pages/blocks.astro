@@ -6,20 +6,21 @@ import { getPayload } from "payload";
 import { config } from "../../../payload-app/src/index";
 
 const payload = await getPayload({ config });
-const homepage = await payload.findGlobal({
-  slug: "homepage",
+const blocks = await payload.findGlobal({
+  slug: "blocks",
 });
+console.log(blocks);
 ---
 
 <Layout>
   {
-    homepage.group?.heroBlocks && (
-      <BlockRenderer blocks={homepage.group.heroBlocks} />
+    blocks.group?.heroBlocks && (
+      <BlockRenderer blocks={blocks.group.heroBlocks} />
     )
   }
   {
-    homepage.group?.contentBlocks && (
-      <BlockRenderer blocks={homepage.group?.contentBlocks?.blocks} />
+    blocks.group?.contentBlocks && (
+      <BlockRenderer blocks={blocks.group.contentBlocks.blocks} />
     )
   }
 </Layout>
