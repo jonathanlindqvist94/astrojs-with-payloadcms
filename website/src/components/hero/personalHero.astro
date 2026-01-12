@@ -12,10 +12,8 @@ const readableDate = new Date(group.bornDate).toLocaleDateString("sv-SE", {
 });
 ---
 
-<section
-  class="max-w-layout-max-width px-inline-padding flex gap-30 mb-20 w-full"
->
-  <div class="max-w-[70%] w-full">
+<section class="flex md:flex-row flex-col md:gap-40 gap-10 mb-20 w-full">
+  <div class="md:max-w-[70%] w-full">
     <Text as="p" margin={false} font="fontBody" class="!text-blue-700"
       >{role}</Text
     >
@@ -58,6 +56,6 @@ const readableDate = new Date(group.bornDate).toLocaleDateString("sv-SE", {
   <img
     src={imageSrc}
     alt={image.alt}
-    class="max-w-[25%] w-full rounded-tr-[8rem] rounded-bl-[8rem] rounded-tl-lg rounded-br-lg h-100 aspect-square shadow-2xl p-4 object-cover"
+    class="md:max-w-[35%] w-full rounded-tr-[8rem] rounded-bl-[8rem] rounded-tl-lg rounded-br-lg h-100 aspect-square shadow-2xl p-4 object-cover"
   />
 </section>
