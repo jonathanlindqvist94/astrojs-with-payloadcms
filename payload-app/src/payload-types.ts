@@ -976,6 +976,45 @@ export interface Block {
                 blockName?: string | null;
                 blockType: 'leftRight';
               }
+            | {
+                title?: string | null;
+                description?: string | null;
+                link: {
+                  type?: ('reference' | 'custom') | null;
+                  newTab?: boolean | null;
+                  reference?:
+                    | ({
+                        relationTo: 'pages';
+                        value: string | Page;
+                      } | null)
+                    | ({
+                        relationTo: 'posts';
+                        value: string | Post;
+                      } | null);
+                  url?: string | null;
+                  label: string;
+                };
+                image?: (string | null) | Media;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'aboutMeCTA';
+              }
+            | {
+                title?: string | null;
+                description?: string | null;
+                backgroundColor?: ('bg-black' | 'bg-red-400' | 'bg-green-400' | 'bg-blue-400') | null;
+                skills?:
+                  | {
+                      skillTitle?: string | null;
+                      skillDescription?: string | null;
+                      skillImage?: (string | null) | Media;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'mySkills';
+              }
           )[]
         | null;
     };
@@ -1224,6 +1263,41 @@ export interface BlocksSelect<T extends boolean = true> {
                           image?: T;
                           imagePosition?: T;
                           backgroundColor?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    aboutMeCTA?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                              };
+                          image?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
+                    mySkills?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          backgroundColor?: T;
+                          skills?:
+                            | T
+                            | {
+                                skillTitle?: T;
+                                skillDescription?: T;
+                                skillImage?: T;
+                                id?: T;
+                              };
                           id?: T;
                           blockName?: T;
                         };
