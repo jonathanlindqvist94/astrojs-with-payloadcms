@@ -95,11 +95,13 @@ export interface Config {
     navigation: Navigation;
     footer: Footer;
     homepage: Homepage;
+    blocks: Block;
   };
   globalsSelect: {
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
+    blocks: BlocksSelect<false> | BlocksSelect<true>;
   };
   locale: null;
   user: User & {
@@ -274,6 +276,31 @@ export interface Post {
                 id?: string | null;
                 blockName?: string | null;
                 blockType: 'contentWithMedia';
+              }
+            | {
+                title?: string | null;
+                description?: string | null;
+                link: {
+                  type?: ('reference' | 'custom') | null;
+                  newTab?: boolean | null;
+                  reference?:
+                    | ({
+                        relationTo: 'pages';
+                        value: string | Page;
+                      } | null)
+                    | ({
+                        relationTo: 'posts';
+                        value: string | Post;
+                      } | null);
+                  url?: string | null;
+                  label: string;
+                };
+                image?: (string | null) | Media;
+                imagePosition?: ('left' | 'right') | null;
+                backgroundColor?: ('bg-red-400' | 'bg-blue-400' | 'bg-green-400') | null;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'leftRight';
               }
           )[]
         | null;
@@ -576,6 +603,26 @@ export interface PostsSelect<T extends boolean = true> {
                           id?: T;
                           blockName?: T;
                         };
+                    leftRight?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                              };
+                          image?: T;
+                          imagePosition?: T;
+                          backgroundColor?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
                   };
             };
       };
@@ -827,6 +874,116 @@ export interface Homepage {
   createdAt?: string | null;
 }
 /**
+ * En samlingssida där alla block är tillgängliga och används för att visa blocken på en samlings sida.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blocks".
+ */
+export interface Block {
+  id: string;
+  title?: string | null;
+  group?: {
+    heroBlocks?:
+      | (
+          | {
+              title?: string | null;
+              image?: (string | null) | Media;
+              content?: string | null;
+              'image position'?: ('Left' | 'Right') | null;
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'defaultHero';
+            }
+          | {
+              role?: string | null;
+              name?: string | null;
+              description?: string | null;
+              image?: (string | null) | Media;
+              group?: {
+                bornIn?: string | null;
+                experience?: string | null;
+                bornDate?: string | null;
+                socialLinks?:
+                  | {
+                      link: {
+                        type?: ('reference' | 'custom') | null;
+                        newTab?: boolean | null;
+                        reference?:
+                          | ({
+                              relationTo: 'pages';
+                              value: string | Page;
+                            } | null)
+                          | ({
+                              relationTo: 'posts';
+                              value: string | Post;
+                            } | null);
+                        url?: string | null;
+                        label: string;
+                      };
+                      id?: string | null;
+                    }[]
+                  | null;
+              };
+              id?: string | null;
+              blockName?: string | null;
+              blockType: 'personalHero';
+            }
+        )[]
+      | null;
+    /**
+     * Här väljer du vilka content block du vill använda på denna post.
+     */
+    contentBlocks?: {
+      blocks?:
+        | (
+            | Accordion
+            | InfoBlock
+            | {
+                title?: string | null;
+                description?: string | null;
+                imageArray?:
+                  | {
+                      image?: (string | null) | Media;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'contentWithMedia';
+              }
+            | {
+                title?: string | null;
+                description?: string | null;
+                link: {
+                  type?: ('reference' | 'custom') | null;
+                  newTab?: boolean | null;
+                  reference?:
+                    | ({
+                        relationTo: 'pages';
+                        value: string | Page;
+                      } | null)
+                    | ({
+                        relationTo: 'posts';
+                        value: string | Post;
+                      } | null);
+                  url?: string | null;
+                  label: string;
+                };
+                image?: (string | null) | Media;
+                imagePosition?: ('left' | 'right') | null;
+                backgroundColor?: ('bg-red-400' | 'bg-blue-400' | 'bg-green-400') | null;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'leftRight';
+              }
+          )[]
+        | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation_select".
  */
@@ -967,6 +1124,109 @@ export interface HomepageSelect<T extends boolean = true> {
                 | {
                     accordion?: T | AccordionSelect<T>;
                     infoBlock?: T | InfoBlockSelect<T>;
+                  };
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blocks_select".
+ */
+export interface BlocksSelect<T extends boolean = true> {
+  title?: T;
+  group?:
+    | T
+    | {
+        heroBlocks?:
+          | T
+          | {
+              defaultHero?:
+                | T
+                | {
+                    title?: T;
+                    image?: T;
+                    content?: T;
+                    'image position'?: T;
+                    id?: T;
+                    blockName?: T;
+                  };
+              personalHero?:
+                | T
+                | {
+                    role?: T;
+                    name?: T;
+                    description?: T;
+                    image?: T;
+                    group?:
+                      | T
+                      | {
+                          bornIn?: T;
+                          experience?: T;
+                          bornDate?: T;
+                          socialLinks?:
+                            | T
+                            | {
+                                link?:
+                                  | T
+                                  | {
+                                      type?: T;
+                                      newTab?: T;
+                                      reference?: T;
+                                      url?: T;
+                                      label?: T;
+                                    };
+                                id?: T;
+                              };
+                        };
+                    id?: T;
+                    blockName?: T;
+                  };
+            };
+        contentBlocks?:
+          | T
+          | {
+              blocks?:
+                | T
+                | {
+                    accordion?: T | AccordionSelect<T>;
+                    infoBlock?: T | InfoBlockSelect<T>;
+                    contentWithMedia?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          imageArray?:
+                            | T
+                            | {
+                                image?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                    leftRight?:
+                      | T
+                      | {
+                          title?: T;
+                          description?: T;
+                          link?:
+                            | T
+                            | {
+                                type?: T;
+                                newTab?: T;
+                                reference?: T;
+                                url?: T;
+                                label?: T;
+                              };
+                          image?: T;
+                          imagePosition?: T;
+                          backgroundColor?: T;
+                          id?: T;
+                          blockName?: T;
+                        };
                   };
             };
       };

@@ -1,10 +1,5 @@
-import { InfoBlock } from '../blocks/infoBlock/infoBlock'
-import { Accordion } from '../blocks/accordion/accordion'
-import { DefaultHero } from '../blocks/hero/defaultHero'
 import { CollectionConfig } from 'payload'
 import { slugField } from 'payload'
-import { PersonalHero } from '../blocks/hero/personalHero'
-import { ContentWithMedia } from '../blocks/contentWithMedia/contentWithMedia'
 import {
   lexicalEditor,
   BoldFeature,
@@ -13,6 +8,13 @@ import {
   HeadingFeature,
   FixedToolbarFeature,
 } from '@payloadcms/richtext-lexical'
+
+import { InfoBlock } from '../blocks/infoBlock/infoBlock'
+import { Accordion } from '../blocks/accordion/accordion'
+import { DefaultHero } from '../blocks/hero/defaultHero'
+import { PersonalHero } from '../blocks/hero/personalHero'
+import { ContentWithMedia } from '../blocks/contentWithMedia/contentWithMedia'
+import { LeftRight } from '../blocks/leftRight/leftRight'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -104,7 +106,7 @@ export const Posts: CollectionConfig = {
                   name: 'blocks',
                   label: 'Content blocks',
                   type: 'blocks',
-                  blocks: [Accordion, InfoBlock, ContentWithMedia],
+                  blocks: [Accordion, InfoBlock, ContentWithMedia, LeftRight],
                 },
               ],
             },
