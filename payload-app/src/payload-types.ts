@@ -1015,6 +1015,19 @@ export interface Block {
                 blockName?: string | null;
                 blockType: 'mySkills';
               }
+            | {
+                items?:
+                  | {
+                      title?: string | null;
+                      description?: string | null;
+                      icon?: ('terminal' | 'biking') | null;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'shortInfo';
+              }
           )[]
         | null;
     };
@@ -1296,6 +1309,20 @@ export interface BlocksSelect<T extends boolean = true> {
                                 skillTitle?: T;
                                 skillDescription?: T;
                                 skillImage?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                    shortInfo?:
+                      | T
+                      | {
+                          items?:
+                            | T
+                            | {
+                                title?: T;
+                                description?: T;
+                                icon?: T;
                                 id?: T;
                               };
                           id?: T;
