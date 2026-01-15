@@ -10,6 +10,7 @@ import LeftRight from "../leftRight/leftRight.astro";
 import Text from "../text/text.astro";
 import MySkills from "../mySkills/mySkills.astro";
 import AboutMeCTA from "../aboutMeCTA/aboutMeCTA.astro";
+import ShortInfo from "../shortInfo/shortInfo.astro";
 
 interface Props {
   blocks: Block | Block[]; // Accept either single block or array
@@ -26,6 +27,7 @@ const blockComponents = {
   leftRight: LeftRight,
   mySkills: MySkills,
   aboutMeCTA: AboutMeCTA,
+  shortInfo: ShortInfo,
 };
 
 // Normalize to array

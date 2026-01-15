@@ -6,6 +6,7 @@ import { DefaultHero } from '../../blocks/hero/defaultHero'
 import { PersonalHero } from '../../blocks/hero/personalHero'
 import { InfoBlock } from '../../blocks/infoBlock/infoBlock'
 import { LeftRight } from '../../blocks/leftRight/leftRight'
+import { ShortInfo } from '../../blocks/shortInfo/shortInfo'
 import { GlobalConfig } from 'payload'
 
 export const Blocks: GlobalConfig = {
@@ -53,7 +54,15 @@ export const Blocks: GlobalConfig = {
                   name: 'blocks',
                   label: 'Content blocks',
                   type: 'blocks',
-                  blocks: [Accordion, InfoBlock, ContentWithMedia, LeftRight, AboutMeCTA, MySkills],
+                  blocks: [
+                    Accordion,
+                    InfoBlock,
+                    ContentWithMedia,
+                    LeftRight,
+                    AboutMeCTA,
+                    MySkills,
+                    ShortInfo,
+                  ],
                 },
               ],
             },
