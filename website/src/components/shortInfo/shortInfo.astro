@@ -1,27 +1,38 @@
 ---
+import ShortInfoCarousel from "./shortInfoCarousel";
 import Text from "../text/text.astro";
+import { Carousel } from "webcoreui/astro";
 
-const { items } = Astro.props;
+const { items, carousel } = Astro.props;
 
 const iconModules = import.meta.glob("../../icons/*.astro", { eager: true });
+
+// Generate pagination pages dynamically
+const paginationPages = items.map((_, index) => ({
+  label: index + 1,
+  ...(index === 0 && { active: true }),
+}));
 ---
 
-<div class="grid lg:grid-cols-3 md:grid-cols-2 gap-15 mb-20">
-  {
-    items.map((item) => {
-      const iconPath = `../../icons/${item.icon}.astro`;
-      const IconComponent = iconModules[iconPath]?.default;
-      return (
-        <div class="flex flex-col items-center gap-4 text-center">
-          {IconComponent && <IconComponent />}
-          <Text as="h2" font="fontHeadings" weight="black" margin={false}>
-            {item.title}
-          </Text>
-          <Text as="p" font="fontBody" weight="default">
-            {item.description}
-          </Text>
-        </div>
-      );
-    })
-  }
-</div>
+{
+  !carousel && (
+    <ul class="grid lg:grid-cols-3 md:grid-cols-2 gap-15 mb-20">
+      {items.map((item) => {
+        const iconPath = `../../icons/${item.icon}.astro`;
+        const IconComponent = iconModules[iconPath]?.default;
+        return (
+          <li class="flex flex-col items-center gap-4 text-center">
+            {IconComponent && <IconComponent />}
+            <Text as="h2" font="fontHeadings" weight="black" margin={false}>
+              {item.title}
+            </Text>
+            <Text as="p" font="fontBody" weight="default">
+              {item.description}
+            </Text>
+          </li>
+        );
+      })}
+    </ul>
+  )
+}
+{carousel && <ShortInfoCarousel client:load items={items} />}
