@@ -2,7 +2,6 @@
 import { defineConfig } from "astro/config";
 import node from "@astrojs/node";
 import { loadEnv } from "payload/node";
-
 import tailwindcss from "@tailwindcss/vite";
 import react from "@astrojs/react";
 
