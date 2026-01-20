@@ -1016,6 +1016,7 @@ export interface Block {
                 blockType: 'mySkills';
               }
             | {
+                carousel?: boolean | null;
                 items?:
                   | {
                       title?: string | null;
@@ -1317,6 +1318,7 @@ export interface BlocksSelect<T extends boolean = true> {
                     shortInfo?:
                       | T
                       | {
+                          carousel?: T;
                           items?:
                             | T
                             | {

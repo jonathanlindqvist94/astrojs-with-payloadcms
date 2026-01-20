@@ -4,6 +4,11 @@ export const ShortInfo: Block = {
   slug: 'shortInfo',
   fields: [
     {
+      name: 'carousel',
+      label: 'Vill du att det ska visas som en karusell? Bocka i denna checkbox',
+      type: 'checkbox',
+    },
+    {
       name: 'items',
       label: 'här skapar du upp dina shortinfo kort',
       type: 'array',
