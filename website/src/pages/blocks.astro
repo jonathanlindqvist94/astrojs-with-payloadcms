@@ -11,7 +11,7 @@ const blocks = await payload.findGlobal({
 });
 ---
 
-<Layout>
+<Layout title={blocks.title}>
   {
     blocks.group?.heroBlocks && (
       <BlockRenderer blocks={blocks.group.heroBlocks} />
