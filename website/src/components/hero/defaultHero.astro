@@ -1,0 +1,24 @@
+---
+import Text from "../text/text.astro";
+
+const { title, image, content, imagePosition } = Astro.props;
+const imageSrc = image?.url
+  ? `${import.meta.env.PUBLIC_PAYLOAD_URL}${image.url}`
+  : "";
+---
+
+<section aria-labelledby="hero-title" class="grid grid-cols-1 h-160 mb-20">
+  <div
+    class="flex flex-col row-start-1 z-10 self-center col-start-1 md:ml-10 p-8 bg-green-400/95 md:max-w-1/2 w-full"
+  >
+    <Text id="hero-title" as="h1" font="fontHeadings" weight="black"
+      >{title}</Text
+    >
+    <Text as="p" font="fontBody" weight="default">{content}</Text>
+  </div>
+  <img
+    src={imageSrc}
+    alt={image.alt}
+    class="col-start-1 col-end-2 object-cover row-start-1 max-h-160 h-full w-full"
+  />
+</section>

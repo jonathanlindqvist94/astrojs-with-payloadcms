@@ -17,9 +17,10 @@ export const DefaultHero: Block = {
       type: 'textarea',
     },
     {
-      name: 'image position',
+      name: 'imagePosition',
+      label: 'image position',
       type: 'radio',
-      options: ['Left', 'Right'],
+      options: ['left', 'right'],
     },
   ],
 }
