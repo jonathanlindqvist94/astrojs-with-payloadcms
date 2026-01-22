@@ -7,9 +7,6 @@ interface Props {
 }
 
 const { items, image, imagePosition, openAtOnce } = Astro.props;
-// console.log(content.root.children.map((item) => item.type));
-// console.log(imagePosition);
-// console.log(openAtOnce);
 const imageSrc = image?.url
   ? `${import.meta.env.PUBLIC_PAYLOAD_URL}${image.url}`
   : "";
