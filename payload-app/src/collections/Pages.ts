@@ -23,6 +23,11 @@ export const Pages: CollectionConfig = {
     group: 'Content',
     description: 'Pages collection',
   },
+  defaultPopulate: {
+    slug: true,
+    title: true,
+    group: true, // Add this
+  },
   fields: [
     slugField({
       fieldToUse: 'title',

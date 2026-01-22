@@ -4,8 +4,6 @@ import Carousel from "../carousel/carousel";
 import { SwiperSlide } from "swiper/react";
 
 const ShortInfoCarousel = ({ items }) => {
-  console.log(items);
-
   return (
     <Carousel>
       {items.map((item) => {

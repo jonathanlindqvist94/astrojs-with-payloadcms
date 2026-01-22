@@ -11,17 +11,18 @@ const payload = await getPayload({ config });
 const { docs } = await payload.find({
   collection: "pages",
   where: { slug: { equals: slug } },
-  limit: 1,
+  limit: 2,
 });
 
 if (docs.length === 0) {
   return new Response(null, { status: 404, statusText: "Not Found here mate" });
 }
-const pages = docs[0];
-console.log(docs);
+console.log("docs log", docs);
+const page = docs[0];
+console.log("pages log", page);
 ---
 
-<Layout title={pages.title}>
-  <BlockRenderer blocks={pages.group?.heroBlocks} />
-  <BlockRenderer blocks={pages.group?.contentBlocks?.blocks} />
+<Layout title={page.title}>
+  <BlockRenderer blocks={page.group?.heroBlocks} />
+  <BlockRenderer blocks={page.group?.contentBlocks?.blocks} />
 </Layout>

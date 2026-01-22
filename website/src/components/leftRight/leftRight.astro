@@ -3,7 +3,6 @@ import Text from "../text/text.astro";
 
 const { title, description, image, link, imagePosition, backgroundColor } =
   Astro.props;
-console.log(backgroundColor);
 
 const linkLabel = link.label || link.reference.title;
 const linkUrl = link.reference.value.slug;
