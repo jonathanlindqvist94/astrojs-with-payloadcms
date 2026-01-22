@@ -1,0 +1,27 @@
+---
+import "../styles/global.css";
+import Layout from "../layouts/index.astro";
+import BlockRenderer from "../components/blockRenderer/blockRenderer.astro";
+import { getPayload } from "payload";
+import { config } from "../../../payload-app/src/index";
+
+const { slug } = Astro.params;
+
+const payload = await getPayload({ config });
+const { docs } = await payload.find({
+  collection: "pages",
+  where: { slug: { equals: slug } },
+  limit: 1,
+});
+
+if (docs.length === 0) {
+  return new Response(null, { status: 404, statusText: "Not Found here mate" });
+}
+const pages = docs[0];
+console.log(docs);
+---
+
+<Layout title={pages.title}>
+  <BlockRenderer blocks={pages.group?.heroBlocks} />
+  <BlockRenderer blocks={pages.group?.contentBlocks?.blocks} />
+</Layout>

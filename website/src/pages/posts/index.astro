@@ -1,0 +1,32 @@
+---
+import "../../styles/global.css";
+import Layout from "../../layouts/index.astro";
+import BlockRenderer from "../../components/blockRenderer/blockRenderer.astro";
+import { getPayload } from "payload";
+import { config } from "../../../../payload-app/src/index";
+
+const payload = await getPayload({ config });
+const posts = await payload.find({
+  collection: "posts",
+});
+---
+
+<Layout title="Posts">
+  <ul>
+    {
+      posts.docs.map((post) => (
+        <li>
+          <a href={`/posts/${post.slug}`}>{post.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+  {
+    posts.docs.map((post) => (
+      <>
+        <BlockRenderer blocks={post.group?.heroBlocks} />
+        <BlockRenderer blocks={post.group?.contentBlocks?.blocks} />
+      </>
+    ))
+  }
+</Layout>
