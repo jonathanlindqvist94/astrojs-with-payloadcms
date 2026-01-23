@@ -48,12 +48,21 @@ const readableDate = new Date(group.bornDate).toLocaleDateString("sv-SE", {
               if (link.link.url.includes("linkedin")) {
                 Icon = linkedIn;
               }
+              const linkURL =
+                link.link.type === "reference"
+                  ? link.link.reference.value.slug
+                  : link.link.url;
+              const openInNewTab = link.link.newTab || false;
+              console.log("link hero log", link);
               return (
                 <li>
                   <a
-                    href={link.link.url}
+                    href={linkURL}
                     class="font-family-body"
                     aria-label={link.link.label}
+                    {...(openInNewTab
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
                   >
                     {Icon && <Icon />}
                   </a>
