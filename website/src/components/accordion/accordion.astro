@@ -27,14 +27,14 @@ const imageSrc = image?.url
       items.map((item) => {
         return (
           <details
-            class={"col-span-full accordion-sub-grid group"}
+            class={"col-span-full accordion-sub-grid group mb-2 last:mb-0!"}
             name={openAtOnce === "One" ? "accordion" : ""}
           >
             <summary
               class={
                 item.length > 1
                   ? "flex justify-between cursor-pointer hover:underline"
-                  : "flex justify-between cursor-pointer hover:underline mb-4"
+                  : "flex justify-between cursor-pointer hover:underline"
               }
             >
               <Text
