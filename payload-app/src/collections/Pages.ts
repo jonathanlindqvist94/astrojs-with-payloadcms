@@ -7,6 +7,7 @@ import { DefaultHero } from '../blocks/hero/defaultHero'
 import { PersonalHero } from '../blocks/hero/personalHero'
 import { InfoBlock } from '../blocks/infoBlock/infoBlock'
 import { LeftRight } from '../blocks/leftRight/leftRight'
+import { Faq } from '../blocks/faq/faq'
 import {
   lexicalEditor,
   BoldFeature,
@@ -98,6 +99,7 @@ export const Pages: CollectionConfig = {
                     AboutMeCTA,
                     MySkills,
                     ShortInfo,
+                    Faq,
                   ],
                 },
               ],

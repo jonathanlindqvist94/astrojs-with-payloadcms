@@ -538,6 +538,19 @@ export interface Page {
                 blockName?: string | null;
                 blockType: 'shortInfo';
               }
+            | {
+                title: string;
+                questions?:
+                  | {
+                      question: string;
+                      answer: string;
+                      id?: string | null;
+                    }[]
+                  | null;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'faq';
+              }
           )[]
         | null;
     };
@@ -1063,6 +1076,20 @@ export interface PagesSelect<T extends boolean = true> {
                                 title?: T;
                                 description?: T;
                                 icon?: T;
+                                id?: T;
+                              };
+                          id?: T;
+                          blockName?: T;
+                        };
+                    faq?:
+                      | T
+                      | {
+                          title?: T;
+                          questions?:
+                            | T
+                            | {
+                                question?: T;
+                                answer?: T;
                                 id?: T;
                               };
                           id?: T;
