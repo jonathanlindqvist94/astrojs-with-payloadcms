@@ -1,3 +1,6 @@
+import { AboutMeCTA } from '../blocks/aboutMeCTA/aboutMeCTA'
+import { MySkills } from '../blocks/mySkills/mySkills'
+import { ShortInfo } from '../blocks/shortInfo/shortInfo'
 import { Accordion } from '../blocks/accordion/accordion'
 import { ContentWithMedia } from '../blocks/contentWithMedia/contentWithMedia'
 import { DefaultHero } from '../blocks/hero/defaultHero'
@@ -87,7 +90,15 @@ export const Pages: CollectionConfig = {
                   name: 'blocks',
                   label: 'Content blocks',
                   type: 'blocks',
-                  blocks: [Accordion, InfoBlock, ContentWithMedia, LeftRight],
+                  blocks: [
+                    Accordion,
+                    InfoBlock,
+                    ContentWithMedia,
+                    LeftRight,
+                    AboutMeCTA,
+                    MySkills,
+                    ShortInfo,
+                  ],
                 },
               ],
             },

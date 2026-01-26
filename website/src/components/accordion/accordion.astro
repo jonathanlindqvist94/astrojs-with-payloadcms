@@ -58,17 +58,6 @@ const imageSrc = image?.url
                 <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
               </svg>
             </summary>
-            {item.content.root.children.map((paragraph) => {
-              return (
-                <div class={"ml-5 pl-4 border-l-2 border-blue-400 mt-4"}>
-                  {paragraph.children.map((textNode) => (
-                    <Text as="p" class="!text-gray-500" font="fontBody">
-                      {textNode.text}
-                    </Text>
-                  ))}
-                </div>
-              );
-            })}
           </details>
         );
       })

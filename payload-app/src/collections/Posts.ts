@@ -15,6 +15,9 @@ import { DefaultHero } from '../blocks/hero/defaultHero'
 import { PersonalHero } from '../blocks/hero/personalHero'
 import { ContentWithMedia } from '../blocks/contentWithMedia/contentWithMedia'
 import { LeftRight } from '../blocks/leftRight/leftRight'
+import { AboutMeCTA } from '../blocks/aboutMeCTA/aboutMeCTA'
+import { MySkills } from '../blocks/mySkills/mySkills'
+import { ShortInfo } from '../blocks/shortInfo/shortInfo'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -106,7 +109,15 @@ export const Posts: CollectionConfig = {
                   name: 'blocks',
                   label: 'Content blocks',
                   type: 'blocks',
-                  blocks: [Accordion, InfoBlock, ContentWithMedia, LeftRight],
+                  blocks: [
+                    Accordion,
+                    InfoBlock,
+                    ContentWithMedia,
+                    LeftRight,
+                    AboutMeCTA,
+                    MySkills,
+                    ShortInfo,
+                  ],
                 },
               ],
             },

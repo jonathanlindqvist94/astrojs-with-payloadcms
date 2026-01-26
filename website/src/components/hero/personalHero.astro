@@ -53,7 +53,6 @@ const readableDate = new Date(group.bornDate).toLocaleDateString("sv-SE", {
                   ? link.link.reference.value.slug
                   : link.link.url;
               const openInNewTab = link.link.newTab || false;
-              console.log("link hero log", link);
               return (
                 <li>
                   <a
