@@ -1,5 +1,6 @@
 ---
 import Text from "../text/text.astro";
+import { Image } from "astro:assets";
 const { title, description, imageArray } = Astro.props;
 ---
 
@@ -26,7 +27,9 @@ const { title, description, imageArray } = Astro.props;
         ];
 
         return (
-          <img
+          <Image
+            height={image.image?.height}
+            width={image.image?.width}
             src={imageSrc}
             alt={image.image?.alt || ""}
             class={`absolute object-cover ${positionClasses[index] || ""}`}

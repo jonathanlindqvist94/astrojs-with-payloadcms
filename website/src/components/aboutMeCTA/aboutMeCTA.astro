@@ -1,5 +1,6 @@
 ---
 import Text from "../text/text.astro";
+import { Image } from "astro:assets";
 
 const { title, description, image, link } = Astro.props;
 const imageSrc = image?.url
@@ -24,5 +25,11 @@ const imageSrc = image?.url
       >{link.label}</a
     >
   </div>
-  <img src={imageSrc} alt={image?.alt} class="md:w-1/2 w-full object-cover" />
+  <Image
+    height={image.height}
+    width={image.width}
+    src={imageSrc}
+    alt={image?.alt}
+    class="md:w-1/2 w-full object-cover"
+  />
 </section>

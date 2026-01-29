@@ -12,6 +12,7 @@ import Text from "../text/text.astro";
 import MySkills from "../mySkills/mySkills.astro";
 import AboutMeCTA from "../aboutMeCTA/aboutMeCTA.astro";
 import ShortInfo from "../shortInfo/shortInfo.astro";
+import Faq from "../faq/faq.astro";
 
 interface Props {
   blocks: Block | Block[]; // Accept either single block or array
@@ -30,6 +31,7 @@ const blockComponents = {
   mySkills: MySkills,
   aboutMeCTA: AboutMeCTA,
   shortInfo: ShortInfo,
+  faq: Faq,
 };
 
 // Normalize to array

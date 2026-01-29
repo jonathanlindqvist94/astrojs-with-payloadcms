@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Layout from "../layouts/index.astro";
 import Text from "../components/text/text.astro";
 import BlockRenderer from "../components/blockRenderer/blockRenderer.astro";
+import Richtext from "../components/richtext/richtext.astro";
 import { getPayload } from "payload";
 import { config } from "../../../payload-app/src/index";
 
@@ -24,53 +25,6 @@ console.log("Page log paragraph:", page.content.root.children);
 
 <Layout title={page.title}>
   <BlockRenderer blocks={page.group?.heroBlocks} />
-  <div class={"max-w-1/2 mx-auto w-full mb-10"}>
-    {
-      page.content.root.children.map((content) => {
-        console.log("content log", content.type);
-        if (content.tag === "h2") {
-          return (
-            <>
-              {content.children.map((child) => (
-                <Text
-                  as="h2"
-                  class="!text-gray-500"
-                  font="fontHeadings"
-                  weight="bold"
-                >
-                  {child.text}
-                </Text>
-              ))}
-            </>
-          );
-        } else if (content.tag === "h3") {
-          return (
-            <>
-              {content.children.map((child) => (
-                <Text
-                  as="h3"
-                  class="!text-gray-500"
-                  font="fontHeadings"
-                  weight="bold"
-                >
-                  {child.text}
-                </Text>
-              ))}
-            </>
-          );
-        } else if (content.type === "paragraph") {
-          return (
-            <>
-              {content.children.map((child) => (
-                <Text as="p" class="!text-gray-500" font="fontBody">
-                  {child.text}
-                </Text>
-              ))}
-            </>
-          );
-        }
-      })
-    }
-  </div>
+  <Richtext content={page} class="max-w-1/2 mx-auto w-full mb-10" />
   <BlockRenderer blocks={page.group?.contentBlocks?.blocks} />
 </Layout>

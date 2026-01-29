@@ -3,6 +3,7 @@ import { getPayload } from "payload";
 import { config } from "../../../../payload-app/src/index";
 import { HamburgerMenu } from "./hamburger/hamburgerMenu";
 import DefaultMenu from "./defaultMenu/defaultMenu.astro";
+import { Image } from "astro:assets";
 
 const payload = await getPayload({ config });
 
@@ -27,7 +28,7 @@ const displayAs = navLinks.displayAs || "normal";
   <div
     class="flex px-inline-padding justify-between max-w-layout-max-width items-center w-full mx-auto"
   >
-    <img src="https://picsum.dev/100/50" alt="" />
+    <Image height={100} width={50} src="https://picsum.dev/100/50" alt="" />
     {
       displayAs === "hamburger" ? (
         <HamburgerMenu client:load items={items} />
