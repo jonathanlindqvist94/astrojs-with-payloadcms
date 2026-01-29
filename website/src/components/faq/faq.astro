@@ -1,0 +1,54 @@
+---
+import Text from "../text/text.astro";
+import RichText from "../richtext/richtext.astro";
+
+const { title, questions } = Astro.props;
+---
+
+<section
+  aria-labelledby="faq-title"
+  class="border flex flex-col gap-10 px-10 py-20 mb-20"
+>
+  <Text
+    id="faq-title"
+    as="h2"
+    font="fontHeadings"
+    weight="bold"
+    class="w-3/4 text-center mx-auto"
+  >
+    {title}
+  </Text>
+
+  <div class="flex w-full gap-20">
+    {
+      questions.map((item) => (
+        <details class="group mb-2 w-1/2 bg-green-100/60 px-6 py-4 h-max">
+          <summary class="flex justify-between cursor-pointer hover:underline items-center">
+            <Text
+              as="h2"
+              styleAs="h3"
+              color="black"
+              font="fontHeadings"
+              margin={false}
+              weight="black"
+            >
+              {item.question}
+            </Text>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="32px"
+              viewBox="0 -960 960 960"
+              width="32px"
+              fill="#1f1f1f"
+              class="group-open:rotate-180 transition-transform self-center"
+            >
+              <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
+            </svg>
+          </summary>
+
+          <RichText content={item.answer} class="" />
+        </details>
+      ))
+    }
+  </div>
+</section>

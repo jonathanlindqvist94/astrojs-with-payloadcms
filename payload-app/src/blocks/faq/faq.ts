@@ -1,4 +1,13 @@
 import { Block } from 'payload'
+import {
+  BoldFeature,
+  FixedToolbarFeature,
+  HeadingFeature,
+  ItalicFeature,
+  lexicalEditor,
+  LinkFeature,
+  UnderlineFeature,
+} from '@payloadcms/richtext-lexical'
 
 export const Faq: Block = {
   slug: 'faq',
@@ -20,7 +29,19 @@ export const Faq: Block = {
         },
         {
           name: 'answer',
-          type: 'text',
+          type: 'richText',
+          editor: lexicalEditor({
+            features: ({ defaultFeatures }) => [
+              BoldFeature(),
+              ItalicFeature(),
+              UnderlineFeature(),
+              LinkFeature(),
+              HeadingFeature({
+                enabledHeadingSizes: ['h2', 'h3'],
+              }),
+              FixedToolbarFeature(),
+            ],
+          }),
           required: true,
         },
       ],
