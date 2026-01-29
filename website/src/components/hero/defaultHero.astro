@@ -1,5 +1,6 @@
 ---
 import Text from "../text/text.astro";
+import { Image } from "astro:assets";
 
 const { title, image, content, imagePosition } = Astro.props;
 const imageSrc = image?.url
@@ -16,7 +17,9 @@ const imageSrc = image?.url
     >
     <Text as="p" font="fontBody" weight="default">{content}</Text>
   </div>
-  <img
+  <Image
+    height={image.image?.height}
+    width={image.image?.width}
     src={imageSrc}
     alt={image.alt}
     class="col-start-1 col-end-2 object-cover row-start-1 max-h-160 h-full w-full"

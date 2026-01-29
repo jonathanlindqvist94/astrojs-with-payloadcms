@@ -1,5 +1,6 @@
 ---
 import Text from "../text/text.astro";
+import { Image } from "astro:assets";
 
 const { title, description, innerContent, image } = Astro.props;
 const imageSrc = image?.url
@@ -46,6 +47,12 @@ const imageSrc = image?.url
         })
       }
     </div>
-    <img src={imageSrc} alt={image.alt} class="md:w-1/2 w-full rounded-lg" />
+    <Image
+      height={image.image?.height}
+      width={image.image?.width}
+      src={imageSrc}
+      alt={image.alt}
+      class="md:w-1/2 w-full rounded-lg"
+    />
   </div>
 </section>

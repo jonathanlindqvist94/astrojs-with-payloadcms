@@ -1,5 +1,6 @@
 ---
 import Text from "../text/text.astro";
+import { Image } from "astro:assets";
 
 const { title, description, backgroundColor, skills } = Astro.props;
 ---
@@ -25,7 +26,9 @@ const { title, description, backgroundColor, skills } = Astro.props;
           : "";
         return (
           <div class="flex flex-col shadow-xl bg-white p-10 w-full">
-            <img
+            <Image
+              height={item.skillImage.height}
+              width={item.skillImage.width}
               src={imageSrc}
               alt={item.skillImage.alt}
               class="max-w-3/4 w-full mx-auto rounded-lg mb-6"

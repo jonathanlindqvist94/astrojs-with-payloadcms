@@ -1,6 +1,7 @@
 ---
 import Text from "../text/text.astro";
 import linkedIn from "../../icons/linkedin.astro";
+import { Image } from "astro:assets";
 
 const { role, name, description, image, group } = Astro.props;
 const imageSrc = image?.url
@@ -72,7 +73,9 @@ const readableDate = new Date(group.bornDate).toLocaleDateString("sv-SE", {
       </ul>
     </div>
   </div>
-  <img
+  <Image
+    height={image.height}
+    width={image.width}
     src={imageSrc}
     alt={image.alt}
     class="md:max-w-[35%] w-full rounded-tr-[8rem] rounded-bl-[8rem] rounded-tl-lg rounded-br-lg h-100 aspect-square shadow-2xl p-4 object-cover"

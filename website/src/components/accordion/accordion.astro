@@ -1,5 +1,6 @@
 ---
 import Text from "../text/text.astro";
+import { Image } from "astro:assets";
 
 interface Props {
   title: string;
@@ -13,13 +14,21 @@ const imageSrc = image?.url
 ---
 
 <div
-  class={"layout-max-width w-full grid-layout-accordion relative max-h-180 mb-20"}
+  class={"layout-max-width w-full grid-layout-accordion relative max-h-180 h-full mb-20"}
 >
-  <img
-    src={imageSrc}
-    alt={"alt"}
-    class={"object-cover sm:col-start-1 sm:col-end-6 col-span-full row-span-full h-full max-h-[45rem]"}
-  />
+  {
+    imageSrc && (
+      <Image
+        height={image.height}
+        width={image.width}
+        src={imageSrc}
+        alt={"alt"}
+        class={
+          "object-cover sm:col-start-1 sm:col-end-6 col-span-full row-span-full h-full max-h-[45rem]"
+        }
+      />
+    )
+  }
   <div
     class={"flex flex-col row-start-1 lg:col-start-4 sm:col-start-3 col-span-full sm:my-30 h-max shadow-lg bg-white py-6 px-4"}
   >
@@ -38,7 +47,7 @@ const imageSrc = image?.url
               }
             >
               <Text
-                as="h2"
+                as={"h2"}
                 class=""
                 color="black"
                 font="fontHeadings"
@@ -58,6 +67,18 @@ const imageSrc = image?.url
                 <path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z" />
               </svg>
             </summary>
+            {item.content &&
+              item.content.root.children.map((paragraph) => {
+                return (
+                  <div class={"ml-5 pl-4 border-l-2 border-blue-400 mt-4"}>
+                    {paragraph.children.map((textNode) => (
+                      <Text as="p" class="!text-gray-500" font="fontBody">
+                        {textNode.text}
+                      </Text>
+                    ))}
+                  </div>
+                );
+              })}
           </details>
         );
       })
