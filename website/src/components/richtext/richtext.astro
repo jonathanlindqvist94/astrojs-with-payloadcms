@@ -1,0 +1,157 @@
+---
+// components/richtext/richtext.astro
+import Text from "../text/text.astro";
+
+interface Props {
+  content: any; // Lexical root object (kan vara content.root eller content.content.root)
+  class?: string;
+}
+
+const { content, class: className } = Astro.props;
+
+// Normalisera input - hantera olika strukturer
+function getRootChildren(content: any) {
+  if (content?.root?.children) return content.root.children;
+  if (content?.content?.root?.children) return content.content.root.children;
+  if (Array.isArray(content)) return content;
+  return [];
+}
+
+const blocks = getRootChildren(content);
+
+// Hjälpfunktion för att tolka Lexical format bitmask
+function getFormatClasses(format: number): string {
+  const classes: string[] = [];
+  if (format & 1) classes.push("font-bold");
+  if (format & 2) classes.push("italic");
+  if (format & 8) classes.push("underline");
+  if (format & 4) classes.push("line-through"); // strikethrough
+  return classes.join(" ");
+}
+
+// Rekursiv funktion för att rendera barn (hanterar nästlade strukturer)
+function renderChildren(children: any[]): any[] {
+  if (!children) return [];
+
+  return children
+    .map((child) => {
+      // Länk-noder
+      if (child.type === "link") {
+        const href =
+          child.fields?.linkType === "internal"
+            ? `/${child.fields.doc?.value?.slug}`
+            : child.fields?.url || "#";
+
+        const linkText =
+          child.children?.[0]?.text ||
+          child.fields?.doc?.value?.title ||
+          "Länk";
+
+        return {
+          type: "link",
+          href,
+          text: linkText,
+          format: child.children?.[0]?.format || 0,
+        };
+      }
+
+      // Vanlig text
+      if (child.type === "text") {
+        return {
+          type: "text",
+          text: child.text || "",
+          format: child.format || 0,
+        };
+      }
+
+      // Linebreak
+      if (child.type === "linebreak") {
+        return { type: "linebreak" };
+      }
+
+      return null;
+    })
+    .filter(Boolean);
+}
+---
+
+<div class={className}>
+  {
+    blocks.map((block) => {
+      // Hoppa över tomma block
+      if (!block.children || block.children.length === 0) return null;
+
+      const Tag = block.tag || "p";
+      const isHeading = block.type === "heading";
+      const isList = block.type === "list";
+      const isListItem = block.type === "listitem";
+
+      // Hantera listor
+      if (isList) {
+        const ListTag = block.listType === "number" ? "ol" : "ul";
+        return (
+          <ListTag
+            class={
+              block.listType === "number"
+                ? "list-decimal pl-6"
+                : "list-disc pl-6"
+            }
+          >
+            {block.children.map((listItem) => (
+              <li>
+                {renderChildren(listItem.children).map((item) => {
+                  if (item.type === "linebreak") return <br />;
+                  if (item.type === "link") {
+                    const formatClasses = getFormatClasses(item.format);
+                    return (
+                      <a
+                        href={item.href}
+                        class={`underline hover:no-underline ${formatClasses}`}
+                      >
+                        {item.text}
+                      </a>
+                    );
+                  }
+                  const formatClasses = getFormatClasses(item.format);
+                  if (!formatClasses) return item.text;
+                  return <span class={formatClasses}>{item.text}</span>;
+                })}
+              </li>
+            ))}
+          </ListTag>
+        );
+      }
+
+      // Hantera vanliga block (paragraphs, headings, etc.)
+      const processedChildren = renderChildren(block.children);
+
+      return (
+        <Text
+          as={Tag}
+          font={isHeading ? "fontHeadings" : "fontBody"}
+          weight={isHeading ? "black" : "default"}
+        >
+          {processedChildren.map((item) => {
+            if (item.type === "linebreak") return <br />;
+
+            if (item.type === "link") {
+              const formatClasses = getFormatClasses(item.format);
+              return (
+                <a
+                  href={item.href}
+                  class={`underline hover:no-underline ${formatClasses}`}
+                >
+                  {item.text}
+                </a>
+              );
+            }
+
+            const formatClasses = getFormatClasses(item.format);
+            if (!formatClasses) return item.text;
+            return <span class={formatClasses}>{item.text}</span>;
+          })}
+        </Text>
+      );
+    })
+  }
+</div>
