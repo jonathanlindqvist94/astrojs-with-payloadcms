@@ -18,6 +18,7 @@ import { LeftRight } from '../blocks/leftRight/leftRight'
 import { AboutMeCTA } from '../blocks/aboutMeCTA/aboutMeCTA'
 import { MySkills } from '../blocks/mySkills/mySkills'
 import { ShortInfo } from '../blocks/shortInfo/shortInfo'
+import { CustomerFeedback } from '../blocks/customerFeedback/customerFeedback'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -117,6 +118,7 @@ export const Posts: CollectionConfig = {
                     AboutMeCTA,
                     MySkills,
                     ShortInfo,
+                    CustomerFeedback,
                   ],
                 },
               ],

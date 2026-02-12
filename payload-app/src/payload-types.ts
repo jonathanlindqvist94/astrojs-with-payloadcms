@@ -355,6 +355,37 @@ export interface Post {
                 blockName?: string | null;
                 blockType: 'shortInfo';
               }
+            | {
+                title: string;
+                ingress: string;
+                customerReviews?:
+                  | {
+                      customerName: string;
+                      customerContent: {
+                        root: {
+                          type: string;
+                          children: {
+                            type: any;
+                            version: number;
+                            [k: string]: unknown;
+                          }[];
+                          direction: ('ltr' | 'rtl') | null;
+                          format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                          indent: number;
+                          version: number;
+                        };
+                        [k: string]: unknown;
+                      };
+                      customerImage?: (string | null) | Media;
+                      highlightReview: boolean;
+                      id?: string | null;
+                    }[]
+                  | null;
+                backgroundColor?: ('bg-green-200' | 'bg-blue-200' | 'bg-red-200') | null;
+                id?: string | null;
+                blockName?: string | null;
+                blockType: 'customerFeedback';
+              }
           )[]
         | null;
     };
@@ -901,6 +932,24 @@ export interface PostsSelect<T extends boolean = true> {
                                 icon?: T;
                                 id?: T;
                               };
+                          id?: T;
+                          blockName?: T;
+                        };
+                    customerFeedback?:
+                      | T
+                      | {
+                          title?: T;
+                          ingress?: T;
+                          customerReviews?:
+                            | T
+                            | {
+                                customerName?: T;
+                                customerContent?: T;
+                                customerImage?: T;
+                                highlightReview?: T;
+                                id?: T;
+                              };
+                          backgroundColor?: T;
                           id?: T;
                           blockName?: T;
                         };
