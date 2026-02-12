@@ -11,7 +11,7 @@ const footerData = await payload.findGlobal({ slug: "footer" });
   <div
     class="max-w-layout-max-width px-inline-padding mx-auto py-12 grid md:grid-cols-3 grid-cols-1 gap-20"
   >
-    <section aria-labelledby="left-column-title">
+    <section>
       <Text
         as="h2"
         class=""
@@ -25,7 +25,7 @@ const footerData = await payload.findGlobal({ slug: "footer" });
         {footerData.leftColumn?.content}
       </Text>
     </section>
-    <section aria-labelledby="center-column-title">
+    <section>
       <Text
         as="h2"
         class=""
@@ -64,7 +64,7 @@ const footerData = await payload.findGlobal({ slug: "footer" });
         </ul>
       </nav>
     </section>
-    <section aria-labelledby="right-column-title">
+    k <section>
       <Text
         as="h2"
         class=""
